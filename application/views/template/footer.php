@@ -14,6 +14,7 @@
             title: 'Success!',
             text: isi,
             icon: 'success',
+            confirmButtonColor: "#198754",
             confirmButtonText: 'OK'
             })
          <?php } ?>

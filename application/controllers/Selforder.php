@@ -28,6 +28,7 @@ public function __construct() {
 	{
 		$cs = $this->session->userdata('id');
 		$data['no_meja'] = $nomeja;
+		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
 		$test = $this->Item_model->sub_category();
 		$data['sub_category'] = "ayam";
 		$data['sub_category_minuman'] = "Cold Drink";

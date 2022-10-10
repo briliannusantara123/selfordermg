@@ -201,4 +201,19 @@ function __construct()
     	$this->session->set_flashdata('success',$nm.' Berhasil Dihapus dari Cart');
 		redirect('cart/home/'.$nomeja);
 	}
+	public function ubah($id,$nama,$nomeja)
+	{
+		// echo $id;exit();
+		$qty = $this->input->post('qty');
+		$extra_notes = $this->input->post('extra_notes');
+		$nm = str_replace("%20"," ", $nama);
+		$data = [
+			'qty' => $qty,
+			'extra_notes' => $extra_notes,
+		];
+		$this->db->where('id',$id);
+    	$this->db->update('sh_cart',$data);
+    	$this->session->set_flashdata('success',$nm.' Berhasil Di Ubah');
+		redirect('cart/home/'.$nomeja);
+	}
 }

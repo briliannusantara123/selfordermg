@@ -81,42 +81,42 @@
 .Cold_Drink{
    background-image: url("<?= base_url() ?>/assets/icon/cold-drink.png");
   background-repeat: no-repeat;
-  background-size: 60%;
+  background-size: 50%;
   background-position-y: 20%;
   background-position-x: 50%;
 }
 .Ice_Creams{
    background-image: url("<?= base_url() ?>/assets/icon/ice-cream-cup.png");
   background-repeat: no-repeat;
-  background-size: 60%;
+  background-size: 50%;
   background-position-y: 20%;
   background-position-x: 50%;
 }
 .Soft_Drinks{
    background-image: url("<?= base_url() ?>/assets/icon/soft-drink.png");
   background-repeat: no-repeat;
-  background-size: 60%;
+  background-size: 50%;
   background-position-y: 20%;
   background-position-x: 50%;
 }
 .Juice_-_Fresh_Drinks{
    background-image: url("<?= base_url() ?>/assets/icon/orange-juice.png");
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 42%;
   background-position-y: 20%;
   background-position-x: 50%;
 }
 .FRAPPE_and_ICED{
    background-image: url("<?= base_url() ?>/assets/icon/frappe.png");
   background-repeat: no-repeat;
-  background-size: 55%;
+  background-size: 45%;
   background-position-y: 20%;
   background-position-x: 50%;
 }
 .ARABICA_COFFEE{
    background-image: url("<?= base_url() ?>/assets/icon/coffee.png");
   background-repeat: no-repeat;
-  background-size: 45%;
+  background-size: 40%;
   background-position-y: 20%;
   background-position-x: 50%;
 }
@@ -139,7 +139,7 @@
 <div class="wrapper" style="background-color: white;">
  <?php foreach($sub as $i){ ?>
     <div class="item">
-      <a href="<?= base_url() ?>orderminuman/menu/Minuman/<?= $i['description'] ?>/<?= $nomeja ?>" class="button <?= str_replace(" ","_", $i['description']) ?>" style="text-decoration:none;padding-top: 20px;"><p style="margin-top: 60px;margin-bottom: 1px;"><?= str_replace(" ",".", $i['description'])?></p></a></div>
+      <a href="<?= base_url() ?>orderminuman/menu/Minuman/<?= $i['description'] ?>/<?= $nomeja ?>" class="button <?= str_replace(" ","_", $i['description']) ?>" style="text-decoration:none;padding-top: 20px;"><p style="margin-top: 50px;margin-bottom: 1px;"><?= str_replace(" ",".", $i['description'])?></p></a></div>
  <?php  }  ?>
 </div>
 
@@ -172,7 +172,7 @@
 </div>
 </header>
 <form action="<?= base_url() ?>orderminuman/search/<?= $nomeja ?>" method="post">
-  <div class="container text-center" style="margin-top: 150px;display: flex;width:100%; position: fixed;z-index: 100000;">
+  <div class="container text-center" style="margin-top: 145px;display: flex;width:100%; position: fixed;z-index: 100000;">
   <div class="row">
     <div class="col-10"><input type="text" name="keyword" class="form-control cari"  placeholder="Cari Menu Minuman..." style="border:1px solid #198754;"></div>
     <div class="col-2"><button type="submit" class="btn btn-success">Cari</button></div>
@@ -204,13 +204,25 @@
       <p class="text_<?= str_replace(" ","_", $i->description)?> text"><?= $i->description ?></p>
       <div class="container text-center">
   <div class="row">
+    <div class="col" >
+      <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;"> - </button>
+    </div>
     <div class="col">
-      <BUTTON type="button" class="btn btn-success inc"  style="font-size: 12px;margin-bottom: 5px;">+</BUTTON>
+      <input type="text" name="qty[]" id="qty" value="0"  class="form-control num<?= $i->id ?>" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; ">
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;">+</button>
+    </div>
+  </div>
+</div>
+      <div class="container text-center">
+  <div class="row">
+    <div class="col">
+      
       <input type="hidden" name="nama[]" id="nama" value="<?= $i->description ?>" class="form-control nama">
       <input type="hidden" name="harga[]" id="harga" value="<?= $i->harga_weekday ?>" class="form-control harga">
-      <input type="text" name="qty[]" id="qty" value="0"  class="form-control qty" style="border:1px solid #198754;color:#198754; ">
       <input type="hidden" name="no[]" id="harga" value="<?= $i->no ?>" class="form-control harga">
-      <BUTTON type="button" class="btn btn-success dec"  style="font-size: 12px;margin-top: 5px;margin-bottom: 5px;">-</BUTTON>
+      
     </div>
   </div>
 </div>
@@ -263,68 +275,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
+  <?php foreach ($item as $i ): ?>
+<script type="text/javascript">
+  const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
+  minus<?= $i->id ?> = document.querySelector(".minus<?= $i->id ?>"),
+  num<?= $i->id ?> = document.querySelector(".num<?= $i->id ?>");
 
-    var ib = document.getElementsByClassName('inc');
-    var db = document.getElementsByClassName('dec');
-    var qty = document.getElementsByClassName('qty');
-    // console.log(ib);
-    // console.log(db);
+  let a<?= $i->id ?> = 0;
 
-    for(var i = 0; i < ib.length; i++){
-      var btn = ib[i];
-      btn.addEventListener('click',function(event){
-        var btnclicked = event.target;
-        // console.log(btnclicked);
-        var input = btnclicked.parentElement.children[3];
-        console.log(input);
-        var inputValue = input.value;
-        // console.log(inputValue);
-        var newValue = parseInt(inputValue) + 1;
-        // console.log(newValue);
-        input.value = newValue;
-      });
-    }
-
-    for(var i = 0; i < db.length; i++){
-      var btn = db[i];
-      btn.addEventListener('click',function(event){
-        var btnclicked = event.target;
-        // console.log(btnclicked);
-        var input = btnclicked.parentElement.children[3];
-        
-        var inputValue = input.value;
+  plus<?= $i->id ?>.addEventListener("click", ()=>{
+   a<?= $i->id ?>++;
+   num<?= $i->id ?>.value = a<?= $i->id ?>;
+   console.log(a<?= $i->id ?>); 
+  });
+  minus<?= $i->id ?>.addEventListener("click", ()=>{
+   
+   var inputValue = num<?= $i->id ?>.value;
         // console.log(inputValue);
         if (inputValue >= 1) {
-        var newValue = parseInt(inputValue) - 1;
-        // console.log(newValue);
-        input.value = newValue;
-        
-        }
-        
-      });
-    }
-
-
-    // const plus = document.querySelector(".plus37"),
-    // minus = document.querySelector(".minus37"),
-    // num = document.querySelector(".num37");
-
-    // let a = 0;
-
-    // plus.addEventListener("click", ()=>{
-    //  a++;
-    //  num.innerText = a;
-    //  console.log(a);
-    // });
-
-    // minus.addEventListener("click", ()=>{
-    //  if (a >= 1) {
-    //   a--;
-    //   num.innerText = a;
-    //  console.log(a);
-    //  }
-      
-    // });
-  </script>
+          a<?= $i->id ?>--;
+   num<?= $i->id ?>.value = a<?= $i->id ?>;
+   console.log(a<?= $i->id ?>);
+   }  
+  });
+</script>
+  
+<?php endforeach ?>
   <?php $this->load->view('template/footer') ?>

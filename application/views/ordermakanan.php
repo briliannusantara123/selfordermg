@@ -20,11 +20,8 @@
   background-color: #198754; /* Green */
   color: white;
 }
-/*.Ayam {
-  background-color: #198754; /* Green */
-  color: white;
-}
-*/
+
+
 .Vegetables {
   padding-top: 16px;
   padding-left: 22px;
@@ -251,13 +248,25 @@
       <p class="text_<?= str_replace(" ","_", $i->description)?> text"><?= $i->description ?></p>
       <div class="container text-center">
   <div class="row">
+    <div class="col" >
+      <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;"> - </button>
+    </div>
     <div class="col">
-      <BUTTON type="button" class="btn btn-success inc"  style="font-size: 12px">+</BUTTON>
+      <input type="text" name="qty[]" id="qty" value="0"  class="form-control num<?= $i->id ?>" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; ">
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;">+</button>
+    </div>
+  </div>
+</div>
+      <div class="container text-center">
+  <div class="row">
+    <div class="col">
+      
       <input type="hidden" name="nama[]" id="nama" value="<?= $i->description ?>" class="form-control nama">
       <input type="hidden" name="harga[]" id="harga" value="<?= $i->harga_weekday ?>" class="form-control harga">
-      <input type="text" name="qty[]" id="qty" value="0"  class="form-control" style="border:1px solid #198754;margin-top: 5px;margin-bottom: 5px;color: #198754; ">
       <input type="hidden" name="no[]" id="harga" value="<?= $i->no ?>" class="form-control harga">
-      <BUTTON type="button" class="btn btn-success dec"  style="font-size: 12px">-</BUTTON>
+      
     </div>
   </div>
 </div>
@@ -311,76 +320,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
+  <?php foreach ($item as $i ): ?>
+<script type="text/javascript">
+  const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
+  minus<?= $i->id ?> = document.querySelector(".minus<?= $i->id ?>"),
+  num<?= $i->id ?> = document.querySelector(".num<?= $i->id ?>");
 
-    var ib = document.getElementsByClassName('inc');
-    var db = document.getElementsByClassName('dec');
-    var qty = document.getElementsByClassName('qty');
-    var cek = document.getElementsByClassName('cek');
-    // console.log(ib);
-    // console.log(db);
+  let a<?= $i->id ?> = 0;
 
-    for(var i = 0; i < ib.length; i++){
-      var btn = ib[i];
-      btn.addEventListener('click',function(event){
-        var btnclicked = event.target;
-        // console.log(btnclicked);
-        var qty = btnclicked.parentElement.children[3];
-        console.log(qty);
-        var inputValue = qty.value;
-        // console.log(inputValue);
-        var newValue = parseInt(inputValue) + 1;
-        // console.log(newValue);
-        qty.value = newValue;
-        window.onload=document.getElementById("cek");
-    var element_jam = document.getElementById("cek");
-    element_jam.value = newValue;
-      });
-    }
-
-    for(var i = 0; i < db.length; i++){
-      var btn = db[i];
-      btn.addEventListener('click',function(event){
-        var btnclicked = event.target;
-        // console.log(btnclicked);
-        var qty = btnclicked.parentElement.children[3];
-        
-        var inputValue = qty.value;
+  plus<?= $i->id ?>.addEventListener("click", ()=>{
+   a<?= $i->id ?>++;
+   num<?= $i->id ?>.value = a<?= $i->id ?>;
+   console.log(a<?= $i->id ?>); 
+  });
+  minus<?= $i->id ?>.addEventListener("click", ()=>{
+   
+   var inputValue = num<?= $i->id ?>.value;
         // console.log(inputValue);
         if (inputValue >= 1) {
-        var newValue = parseInt(inputValue) - 1;
-        // console.log(newValue);
-        qty.value = newValue;
-        window.onload=document.getElementById("cek");
-    var element_jam = document.getElementById("cek");
-    element_jam.value = newValue;
-        
-        }
-        
-      });
-    }
-
-
-    // const plus = document.querySelector(".plus37"),
-    // minus = document.querySelector(".minus37"),
-    // num = document.querySelector(".num37");
-
-    // let a = 0;
-
-    // plus.addEventListener("click", ()=>{
-    //  a++;
-    //  num.innerText = a;
-    //  console.log(a);
-    // });
-
-    // minus.addEventListener("click", ()=>{
-    //  if (a >= 1) {
-    //   a--;
-    //   num.innerText = a;
-    //  console.log(a);
-    //  }
-      
-    // });
-
-  </script>
+          a<?= $i->id ?>--;
+   num<?= $i->id ?>.value = a<?= $i->id ?>;
+   console.log(a<?= $i->id ?>);
+   }  
+  });
+</script>
+  
+<?php endforeach ?>
   <?php $this->load->view('template/footer') ?>

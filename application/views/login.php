@@ -36,7 +36,7 @@ h2 {
   flex-direction: column; 
   justify-content: center;
   width: 100%;
-  min-height: 100%;
+  min-height: 85%;
   padding: 20px;
 }
 

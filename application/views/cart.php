@@ -1,4 +1,16 @@
 <?php $this->load->view('template/head') ?>
+<style type="text/css">
+	.modal {
+   margin-top: 100px;
+   top: 10px;
+   right: 100px;
+   bottom: 0;
+   left: 0;
+   z-index: 10040000;
+   overflow: auto;
+   overflow-y: auto;
+}
+</style>
 <nav class="bg-success">
   <div class="container">
     <p style="text-align: center;padding-top: 13px;color: white;">Cart Order</p>
@@ -18,9 +30,10 @@
 		
   	<div class="row">
     <div class="col-4"><img src="<?= $i->image_path ?>" alt="Red dot" style="width: 120px;height: 120px;border-radius: 20px;" /></div>
-    <div class="col-4" style="margin-top: 10px;"><?= $i->description?><br>Rp <?= number_format($i->unit_price)?><br><?= $i->extra_notes?></div>
-    <div class="col-1" style="margin-top: 10px;text-align: center;">Qty <br> <p style="padding-left: 7px;"><?= $i->qty ?></p></div>
-    <div class="col-1" style="margin-top: 10px;"><p style="margin-left: 20px;">Aksi</p><a href="<?= base_url() ?>cart/delete/<?= $i->id ?>/<?= $i->description ?>/<?= $nomeja ?>" class="btn btn-danger" style="padding-top: 10px;padding-bottom: 10px;">Hapus</a></div>
+    <div class="col-4" style="margin-top: 10px;color: #198754;"><?= $i->description?><br>Rp <?= number_format($i->unit_price)?><br><?= $i->extra_notes?></div>
+    <div class="col-1" style="margin-top: 10px;text-align: center;color: #198754;">Qty <br> <p style="padding-left: 7px;"><?= $i->qty ?></p></div>
+    <div class="col-1" style="margin-top: 10px;text-align: center;margin-left: 5px;color: #198754;">Aksi <br> <a href="<?= base_url() ?>cart/delete/<?= $i->id ?>/<?= $i->description ?>/<?= $nomeja ?>" class="btn btn-danger" style="padding:8px 8px;margin-bottom: 2px; "><i class="fas fa-trash"></i></a><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $i->id ?>" class="btn btn-success" style="padding:7px 7px; "><i class="fas fa-pen" style="color: white"></i></a></div>
+    
   </div>
   <input type="hidden" name="nama[]" value="<?= $i->description ?>">
   <input type="hidden" name="qty[]" value="<?= $i->qty ?>">
@@ -53,5 +66,66 @@
   </div>
 </div>
 <br>
+<?php foreach ($item as $i): ?>
+<div class="modal fade" id="exampleModal<?= $i->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #198754;color: white;">
+        <h5 class="modal-title" style="text-align: center;" id="exampleModalLabel">Ubah Orderan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    <form action="<?= base_url() ?>cart/ubah/<?= $i->id ?>/<?= $i->description ?>/<?= $nomeja ?>" method="post">
+      <div class="modal-body">
+        
+      <h4 style="text-align: center;color: #198754;"><?= $i->description ?></h4>
+      <img src="<?= $i->image_path ?>" alt="Red dot" style="width: 180px;height: 180px;border-radius: 20px; display: block;margin-left: auto;margin-right: auto;" />
+      <div class="container text-center">
+  <div class="row">
+    <div class="col" >
+      <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 30px;padding-right: 30px;"> - </button>
+    </div>
+    <div class="col">
+      <input type="text" name="qty" class="form-control num<?= $i->id ?>" value="<?= $i->qty ?>" style="margin-bottom: 5px;text-align: center">
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 30px;padding-right: 30px;">+</button>
+    </div>
+  </div>
+</div>
+      <input type="text" name="extra_notes" class="form-control" value="<?= $i->extra_notes ?>" placeholder="Masukan Pesan...">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" style="padding-left: 40px;padding-right: 40px;padding-top: 10px;padding-bottom: 10px;">Ubah</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<?php endforeach ?>
+<?php foreach ($item as $i ): ?>
+<script type="text/javascript">
+	const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
+	minus<?= $i->id ?> = document.querySelector(".minus<?= $i->id ?>"),
+	num<?= $i->id ?> = document.querySelector(".num<?= $i->id ?>");
 
+	let a<?= $i->id ?> = <?= $i->qty ?>;
+
+	plus<?= $i->id ?>.addEventListener("click", ()=>{
+	 a<?= $i->id ?>++;
+	 num<?= $i->id ?>.value = a<?= $i->id ?>;
+	 console.log(a<?= $i->id ?>);	
+	});
+	minus<?= $i->id ?>.addEventListener("click", ()=>{
+	 
+	 var inputValue = num<?= $i->id ?>.value;
+        // console.log(inputValue);
+        if (inputValue >= 1) {
+        	a<?= $i->id ?>--;
+	 num<?= $i->id ?>.value = a<?= $i->id ?>;
+	 console.log(a<?= $i->id ?>);
+	 }	
+	});
+</script>
+	
+<?php endforeach ?>
 <?php $this->load->view('template/footer') ?>

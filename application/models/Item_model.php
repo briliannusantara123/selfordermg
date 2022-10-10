@@ -281,6 +281,15 @@ public function order_bill_line($cabang,$notrans)
 				$this->db->where('category','MINUMAN');
 				$this->db->like('description',$keyword);
 				return $this->db->get()->result();
+			}
+	public function hitungcart($nomeja)
+			{
+				$idc = $this->session->userdata('id');
+				$this->db->select('*');
+				$this->db->from('sh_cart');
+				$this->db->where('id_customer',$idc);
+				$this->db->where('id_table',$nomeja);
+				return $this->db->count_all_results();
 			}				
 	}
  ?>

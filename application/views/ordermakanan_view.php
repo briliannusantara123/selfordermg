@@ -11,8 +11,8 @@
 <br>
 <form action="<?= base_url() ?>cart/order/<?= $no_meja ?>" method="POST">
 <div class="container ">
-  <table class="table table-hover">
-  <thead>
+  <table class="table table-hover" >
+  <thead style="background-color: #198754;color: white;">
     <tr>
       <th scope="col">Menu Order</th>
       <th scope="col">Qty</th>

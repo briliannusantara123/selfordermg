@@ -6,6 +6,7 @@ class Billsementara extends CI_Controller {
 	function __construct()
 		{
 			parent::__construct();
+			$nomeja = $this->session->userdata('nomeja');
 			if($this->session->userdata('username') == ""){
             redirect('login/logout');
         }
