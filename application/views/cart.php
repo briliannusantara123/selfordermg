@@ -1,4 +1,8 @@
 <?php $this->load->view('template/head') ?>
+<?php   $previous = "javascript:history.go(-1)";
+if(isset($_SERVER['HTTP_REFERER'])) {
+    $previous = $_SERVER['HTTP_REFERER'];
+} ?>
 <style type="text/css">
 	.modal {
    margin-top: 100px;
@@ -29,14 +33,22 @@
 	<?php foreach($item as $i){ ?>
 		
   	<div class="row">
-    <div class="col-4"><img src="<?= $i->image_path ?>" alt="Red dot" style="width: 120px;height: 120px;border-radius: 20px;" /></div>
+    <?php if ( $i->image_path != "" ): ?>
+        <div class="col-4"><img src="<?= $i->image_path ?>" alt="Red dot" style="width: 120px;height: 120px;border-radius: 20px;" /></div>
+      <?php  else: ?>
+        <div class="col-4"><img src="<?= base_url();?>/assets/picture.png" alt="Red dot" style="width: 120px;height: 120px;border-radius: 20px;" /></div>
+      <?php endif ?>
+    
     <div class="col-4" style="margin-top: 10px;color: #198754;"><?= $i->description?><br>Rp <?= number_format($i->unit_price)?><br><?= $i->extra_notes?></div>
     <div class="col-1" style="margin-top: 10px;text-align: center;color: #198754;">Qty <br> <p style="padding-left: 7px;"><?= $i->qty ?></p></div>
     <div class="col-1" style="margin-top: 10px;text-align: center;margin-left: 5px;color: #198754;">Aksi <br> <a href="<?= base_url() ?>cart/delete/<?= $i->id ?>/<?= $i->description ?>/<?= $nomeja ?>" class="btn btn-danger" style="padding:8px 8px;margin-bottom: 2px; "><i class="fas fa-trash"></i></a><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $i->id ?>" class="btn btn-success" style="padding:7px 7px; "><i class="fas fa-pen" style="color: white"></i></a></div>
+    <p style="color: #198754;">Dibawa Pulang : <?= $i->qty_take_away?></p>
     
   </div>
   <input type="hidden" name="nama[]" value="<?= $i->description ?>">
   <input type="hidden" name="qty[]" value="<?= $i->qty ?>">
+  <input type="hidden" name="cek[]" value="<?= $i->as_take_away ?>">
+  <input type="hidden" name="qta[]" value="<?= $i->qty_take_away ?>">
   <input type="hidden" name="harga[]" value="<?= $i->unit_price ?>">
   <input type="hidden" name="pesan[]" value="<?= $i->extra_notes ?>">
 
@@ -48,14 +60,14 @@
 <br>
 <?php if ($item == NULL): ?>
 <div class="container">
-<a href="<?php echo base_url('') ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;display: block;margin-left: auto;margin-right: auto;">Kembali</a>
+<a href="<?= $previous ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;display: block;margin-left: auto;margin-right: auto;">Kembali</a>
 </div>
 <?php else: ?>
 <div class="container text-center">
 <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
   Order
 </button>
-<a href="<?php echo base_url('') ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
+<a href="<?= $previous ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
 </div>	
 <?php endif ?>
 

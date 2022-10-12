@@ -12,12 +12,179 @@
   font-size: 12px;
   transition-duration: 0.4s;
 }
-.active, .btn:hover {
-  background-color: #198754;
+.active_ayam{
+   background-color: #198754;
   color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/ayam.png");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_sapi{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/sapi.png");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_seafood{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/seafood.png");
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_sate{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/sate.png");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_kuah{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/kuah.png");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_vegetables{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/vegetable.png");
+  background-repeat: no-repeat;
+  background-size: 55%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_nasi{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/nasi.png");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_paket{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/paket.png");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_side{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/side-dishes.png");
+  background-repeat: no-repeat;
+  background-size: 55%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+.active_food{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/food.png");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-y: 20%;
+  background-position-x: 50%;
 }
 .button:hover {
   background-color: #198754; /* Green */
+  border-radius: 10px;
   color: white;
 }
 
@@ -112,7 +279,7 @@
   background-position-x: 50%;
 }
 .Seafood{
-   background-image: url("<?= base_url() ?>/assets/icon/seafood.png");
+  background-image: url("<?= base_url() ?>/assets/icon/seafood.png");
   background-repeat: no-repeat;
   background-size: 60%;
   background-position-y: 20%;
@@ -167,12 +334,38 @@
   background-position-y: 20%;
   background-position-x: 50%;
 }
+.rekomendasi{
+  background-image: url("<?= base_url() ?>/assets/icon/badge.png");
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position-y: 20%;
+  background-position-x: 50%;
+}
+footer{
+  text-align: center;
+  background-color: white;
+  margin-top: 10px;
+  border-radius: 10%;
+  /*position: absolute;*/
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 200000;
+}
+
     </style>
 
     <nav class="bg-success" style="z-index: 10000;position: fixed;width: 100%;">
   <div class="container">
-    <p style="text-align: center;padding-top: 13px;color: white;"> Order Makanan</p>
+  <div class="row">
+    <div class="col-9"><p style="padding-top: 13px;color: white;">Menu Makanan</p></div>
+    <div class="col-1" style="z-index: 10040000;"><a style="text-align: center;margin-top: 6px;" href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>" class=""><svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" color="white" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" style="margin-right: 10px;margin-top: 12px;margin-left: 10px;">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg></a></div>
+<div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><?= $cart_count ?></h3></strong></div>
+
   </div>
+</div>
   <div style="width: 100%; height: 0px; border: 1px #000 solid;">
 </div>
 </nav>
@@ -181,9 +374,11 @@
 <header style="display: flex;width:100%; position: fixed;z-index: 100000;margin-top: 30px;background-color: white;">
 
 <div class="wrapper" style="background-color: white;">
+  <div class="item">
+      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/rekomendasi" class="button rekomendasi" style="text-decoration:none;padding: 10px 10px;"><p style="margin-top: 60px;margin-bottom: 1px;">Rekomendasi</p></a></div>
  <?php foreach($sub as $i){ ?>
     <div class="item">
-      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/<?= $i['description'] ?>/<?= $nomeja ?>" class="button <?= str_replace(" ","_", $i['description']) ?>" style="text-decoration:none"><p style="margin-top: 60px;margin-bottom: 1px;"><?= str_replace(" ","_", $i['description'])?></p></a></div>
+      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/<?= $i['description'] ?>" class="button <?= str_replace(" ","_", $i['description']) ?>" style="text-decoration:none"><p style="margin-top: 60px;margin-bottom: 1px;"><?= str_replace(" ","_", $i['description'])?></p></a></div>
  <?php  }  ?>
 </div>
 
@@ -270,6 +465,26 @@
     </div>
   </div>
 </div>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-7" style="color: #198754;">TakeAway?</div>
+    <div class="col-5"><input type="checkbox" value="Take Away" onclick="getClick<?= $i->id ?>()" class="ta<?= $i->id ?>"></div>
+  </div>
+</div>
+<div class="container text-center" id="tk<?= $i->id ?>" hidden >
+  <div class="row">
+    <div class="col" >
+      <input type="hidden" name="cek[]" class="cek<?= $i->id ?>">
+      <button type="button" class="btn btn-success mi<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;"> - </button>
+    </div>
+    <div class="col">
+      <input type="text" name="qta[]" id="qta" value="0"  class="form-control nu<?= $i->id ?>" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px;" readonly disabled="disabled">
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-success pl<?= $i->id ?>" id="pls<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;">+</button>
+    </div>
+  </div>
+</div>
       <input type="text" name="pesan[]" class="form-control cari" placeholder="Masukan Pesan" style="border:1px solid #198754;margin-top: 5px;">
     </div>
   </div>
@@ -280,16 +495,22 @@
   </div>
 </div>   
 <br>
+<br>  
 <br>
+
+<footer>
 <div class="container text-center">
+<!-- <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
+  Order 
+</button> -->
 <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
-  Order
+  Lihat <i class="fa fa-cart-plus"></i> <b align="right"><?= $total_qty;?></b>
 </button>
 <a href="<?php echo base_url('') ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
 </form>
 <br>
-<br>
 </div>
+</footer>
 <!-- Modal -->
 <?php foreach ($item as $i): ?>
 <div class="modal fade" id="exampleModal<?= $i->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -326,6 +547,10 @@
   minus<?= $i->id ?> = document.querySelector(".minus<?= $i->id ?>"),
   num<?= $i->id ?> = document.querySelector(".num<?= $i->id ?>");
 
+  const pl<?= $i->id ?> = document.querySelector(".pl<?= $i->id ?>"),
+  mi<?= $i->id ?> = document.querySelector(".mi<?= $i->id ?>"),
+  nu<?= $i->id ?> = document.querySelector(".nu<?= $i->id ?>");
+
   let a<?= $i->id ?> = 0;
 
   plus<?= $i->id ?>.addEventListener("click", ()=>{
@@ -335,15 +560,111 @@
   });
   minus<?= $i->id ?>.addEventListener("click", ()=>{
    
-   var inputValue = num<?= $i->id ?>.value;
+   var inputValueA = num<?= $i->id ?>.value;
         // console.log(inputValue);
-        if (inputValue >= 1) {
+        if (inputValueA >= 1) {
           a<?= $i->id ?>--;
    num<?= $i->id ?>.value = a<?= $i->id ?>;
+   nu<?= $i->id ?>.value = a<?= $i->id ?>;
    console.log(a<?= $i->id ?>);
    }  
   });
+
+  let b<?= $i->id ?> = 0;
+
+  pl<?= $i->id ?>.addEventListener("click", ()=>{
+    var inputValueA = num<?= $i->id ?>.value;
+    if (inputValueA >= 1) {
+   b<?= $i->id ?>++;
+   if (b<?= $i->id ?> == inputValueA) {
+    var pls<?= $i->id ?> = document.getElementById('pls<?= $i->id ?>');
+    pls<?= $i->id ?>.disabled = true;
+   }
+   nu<?= $i->id ?>.value = b<?= $i->id ?>;
+   console.log(b<?= $i->id ?>); 
+ }
+  });
+  mi<?= $i->id ?>.addEventListener("click", ()=>{
+   
+   var inputValueB = nu<?= $i->id ?>.value;
+        // console.log(inputValue);
+        if (inputValueB >= 1) {
+          b<?= $i->id ?>--;
+   nu<?= $i->id ?>.value = b<?= $i->id ?>;
+   console.log(b<?= $i->id ?>);
+   }  
+  });
 </script>
+
   
+<?php endforeach ?>
+<script type="text/javascript">
+  const currentLocation = location.href;
+  const menuItem = document.querySelectorAll('a');
+  
+  const menuLength = menuItem.length
+  for (let i = 0;i<menuLength;i++){
+    if(menuItem[i].href === currentLocation){
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Ayam") {
+        menuItem[i].className = "active_ayam"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Sapi") {
+        menuItem[i].className = "active_sapi"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Seafood") {
+        menuItem[i].className = "active_seafood"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Sate") {
+        menuItem[i].className = "active_sate"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Kuah") {
+        menuItem[i].className = "active_kuah"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Vegetables") {
+        menuItem[i].className = "active_vegetables"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Nasi") {
+        menuItem[i].className = "active_nasi"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Paket") {
+        menuItem[i].className = "active_paket"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/Side%20Dishes") {
+        menuItem[i].className = "active_side"
+       console.log(menuItem[i]);
+      }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/ordermakanan/menu/Makanan/FOOD") {
+        menuItem[i].className = "active_food"
+       console.log(menuItem[i]);
+      }
+      
+    }
+
+  }
+</script>
+<?php foreach ($item as $i ): ?>
+<script type="text/javascript">
+
+function getClick<?= $i->id ?>() {
+    var c = document.querySelector(".ta<?=$i->id?>");
+    var cek = document.querySelector(".cek<?=$i->id?>");
+    if (c.checked == true) {
+      $('#tk<?= $i->id ?>').prop('hidden', false);
+      $(".nu<?= $i->id ?>").prop('disabled', false);
+      cek.value=1;
+    }else{
+      $('#tk<?= $i->id ?>').prop('hidden', true);
+      $(".nu<?= $i->id ?>").prop('disabled', true);
+    }
+  }
+</script>
 <?php endforeach ?>
   <?php $this->load->view('template/footer') ?>

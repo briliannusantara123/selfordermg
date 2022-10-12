@@ -19,7 +19,7 @@
          <?php if( $this->session->flashdata('error') ) {?>
             var isi = <?= json_encode($this->session->flashdata('error'))?>;
             Swal.fire({
-            title: 'Success!',
+            title: 'Notification!',
             text: isi,
             icon: 'error',
             confirmButtonText: 'OK'

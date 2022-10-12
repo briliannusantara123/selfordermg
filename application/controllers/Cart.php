@@ -40,6 +40,8 @@ function __construct()
 		$uc = $this->session->userdata('username');
 		$ic = $this->session->userdata('id');
 		$qty = $this->input->post('qty');
+		$ata = $this->input->post('cek');
+		$qta = $this->input->post('qta');
 		$nama = $this->input->post('nama');
 		$pesan = $this->input->post('pesan');
 		$harga = $this->input->post('harga');
@@ -57,6 +59,8 @@ function __construct()
 				'entry_by' => $uc,
 				'id_customer' => $ic,
 				'item_code' => $item_code[$i],
+				'as_take_away' => $ata[$i],
+				'qty_take_away' => $qta[$i],
 			];
 			}
     
@@ -82,6 +86,8 @@ function __construct()
 	public function order($table)
 	{
 		$qty = $this->input->post('qty');
+		$ata = $this->input->post('cek');
+		$qta = $this->input->post('qta');
 		$nama = $this->input->post('nama');
 		$pesan = $this->input->post('pesan');
 		$harga = $this->input->post('harga');
@@ -168,7 +174,9 @@ function __construct()
 				'extra_notes' => $pesan[$i],
 				'checker_printed' => 1,
 				'created_date' => date('Y-m-d'),
-				'order_type' => $order_stat
+				'order_type' => $order_stat,
+				'as_take_away' => $ata[$i],
+				'qty_take_away' => $qta[$i],
 			];
 			 }
     

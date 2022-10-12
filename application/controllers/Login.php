@@ -21,9 +21,22 @@ class Login extends CI_Controller
 	public function log($nomeja)
 	{
 		$this->form_validation->set_rules('passcode','passcode','trim|required');
-		$data['nomeja'] = $nomeja;
+		if ($nomeja != NULL) {
+			$data['nomeja'] = $nomeja;
+		}else{
+			$data['nomeja'] = $this->session->userdata('nomeja');
+		}
+		$idc = $this->session->userdata('id');
+		$session = $this->db->order_by('id',"desc")->where('id_table',$nomeja)
+  			->limit(1)
+  			->get('sh_rel_table')
+  			->row('status');
 		$nm = $this->session->userdata('nomeja');
 		$log = $this->Item_model->log($nomeja)->result();
+		if ($session == 'Payment') {
+			$this->session->set_flashdata('error','Status Meja Sudah Payment Tidak Dapat Mengakses Halaman Menu.');
+			$this->load->view('login',$data);
+		}else{
 		if ($log) {
 			if ($this->form_validation->run() == FALSE) {
 			$this->load->view('login',$data);	
@@ -31,9 +44,10 @@ class Login extends CI_Controller
 			$this->_login($nomeja);
 		}
 		}else{
-			$this->session->set_flashdata('error','Status Meja Sudah Payment Tidak Dapat Mengakses Halaman Menu.');
+
 			$this->load->view('login',$data);
 			
+		}
 		}
 		
 		
@@ -42,14 +56,15 @@ class Login extends CI_Controller
 	{
 		$passcode = $this->input->post('passcode');
 		$date = date('Y-m-d');
-		$user = $this->db->get_where('sh_m_customer',['passcode' => $passcode,'create_date' => $date])->row_array();
+		$user = $this->db->get_where('sh_m_customer',['passcode' => $passcode,'left(create_date,10) = ' => $date])->row_array();
 		// var_dump($user);exit();
-		$meja = $this->db->get_where('sh_rel_table',['id_customer' => $user['id'], 'id_table' => $nomeja ])->row_array();
+		$where = "id_customer = '".$user['id']."' and id_table = '".$nomeja."' and status in('Order','Dining','Billing')";
+		$meja = $this->db->get_where('sh_rel_table',$where)->row_array();
 		// var_dump($meja);die();
 		if ($user) {
 			if ($user['passcode'] == $passcode && $meja['id_table'] == $nomeja) {
 				$data = [
-					'username' => $user['member_name'],
+					'username' => $user['customer_name'],
 					'no_telp' => $user['no_telp'],
 					'id' => $user['id'],
 					'nomeja' => $nomeja

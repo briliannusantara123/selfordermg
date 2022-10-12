@@ -290,6 +290,16 @@ public function order_bill_line($cabang,$notrans)
 				$this->db->where('id_customer',$idc);
 				$this->db->where('id_table',$nomeja);
 				return $this->db->count_all_results();
-			}				
+			}
+			public function cart_count($ic,$nomeja)
+		{
+			$this->db->select('sum(d.qty) as total_qty');
+	        $this->db->from('sh_cart d');
+	        $this->db->join('sh_m_item m', 'm.no = d.item_code', 'inner');
+	        $this->db->where(array('id_customer'=>$ic,'id_table'=>$nomeja));
+	        $this->db->group_by('d.id_trans,d.id_table');      
+	        $query = $this->db->get();
+	        return $query;
+		}				
 	}
  ?>

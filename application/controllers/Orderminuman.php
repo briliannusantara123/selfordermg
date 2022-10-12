@@ -48,29 +48,33 @@ class Orderminuman extends CI_Controller {
 			$this->load->view('orderminuman',$data);
 		
 	}
-	public function menu($tipe,$sub_category,$nomeja)
+	public function menu($tipe,$sub_category)
 	{
-		
+		$nomeja = $this->session->userdata('nomeja');
 		$data['item'] = $this->Item_model->getData($tipe,$sub_category);
 		$data['sub'] = $this->Item_model->sub_category_minuman();
-		$data['nomeja'] = $nomeja;
+		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
+		$data['nomeja'] = $this->session->userdata('nomeja');
 			$this->load->view('orderminuman',$data);
 		
 	}
-	public function search($nomeja)
+	public function search()
 	{
 		$keyword = $this->input->post('keyword');
 		// var_dump($keyword);exit();
 		$data['item'] = $this->Item_model->get_keyword_minuman($keyword);
 		$data['sub'] = $this->Item_model->sub_category_minuman();
-		$data['nomeja'] = $nomeja;
+		$data['nomeja'] = $this->session->userdata('nomeja');
 		$this->load->view('orderminuman',$data);
 	}
-	public function addcart($table)
+	public function addcart()
 	{
 		$uc = $this->session->userdata('username');
 		$ic = $this->session->userdata('id');
+		$table = $this->session->userdata('nomeja');
 		$qty = $this->input->post('qty');
+		$ata = $this->input->post('cek');
+		$qta = $this->input->post('qta');
 		$nama = $this->input->post('nama');
 		$pesan = $this->input->post('pesan');
 		$harga = $this->input->post('harga');
@@ -99,6 +103,8 @@ class Orderminuman extends CI_Controller {
 				'id_table' => $table,
 				'extra_notes' => $pesan[$i],
 				'entry_date' => date('Y-m-d'),
+				'as_take_away' => $ata[$i],
+				'qty_take_away' => $qta[$i],
 			];
 			}
     
@@ -110,7 +116,7 @@ class Orderminuman extends CI_Controller {
 	$result = $this->db->insert_batch('sh_cart',$data);
 			if ($result) {
 				$this->session->set_flashdata('success','Order Menu/Paket Berhasil Di Tambahkan Ke Dalam Cart');
-				redirect('selforder/home/'.$table);
+				redirect($_SERVER['HTTP_REFERER']);
 				// $where = array('qty' => 0);
 				// $this->Item_model->hapus_qty($where,'testing');
 			}else{
@@ -118,27 +124,29 @@ class Orderminuman extends CI_Controller {
 			}
 	}
 	}
-	public function subcreate($nomeja)
+	public function subcreate()
 	{
 		$uc = $this->session->userdata('username');
 		$data['total'] = $this->Item_model->totalSubOrder($uc);
 		$data['item'] = $this->Item_model->getDataSubOrder($uc);
-		$data['no_meja'] = $nomeja;
+		$data['no_meja'] = $this->session->userdata('nomeja');
 		
 		$this->load->view('orderminuman_view',$data);
 
 	}
-	public function batal($nomeja)
+	public function batal()
 	{
 		$ic = $this->session->userdata('id');
+		$nomeja = $this->session->userdata('nomeja');
 		$this->db->where('id_customer',$ic);
     	$this->db->delete('sh_t_sub_transactions');
     	redirect('orderminuman/menu/Minuman/Cold Drink/'.$nomeja);
 	}
-	public function create($nomeja)
+	public function create()
 	{
 		$uc = $this->session->userdata('username');
 		$ic = $this->session->userdata('id');
+		$nomeja = $this->session->userdata('nomeja');
 		$qty = $this->input->post('qty');
 		$nama = $this->input->post('nama');
 		$pesan = $this->input->post('pesan');
@@ -172,8 +180,9 @@ class Orderminuman extends CI_Controller {
 
 		
 	}
-	public function order($table)
+	public function order()
 	{
+		$table = $this->session->userdata('nomeja');
 		$qty = $this->input->post('qty');
 		$nama = $this->input->post('nama');
 		$pesan = $this->input->post('pesan');

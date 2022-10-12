@@ -48,42 +48,53 @@ class Ordermakanan extends CI_Controller {
 			$this->load->view('ordermakanan',$data);
 		
 	}
-	public function menu($tipe,$sub_category,$nomeja)
+	public function menu($tipe,$sub_category)
 	{
-		
+		$id_customer = $this->session->userdata('id');
+		$nomeja = $this->session->userdata('nomeja');
 		$data['item'] = $this->Item_model->getData($tipe,$sub_category);
 		$data['sub'] = $this->Item_model->sub_category();
 		$data['s'] = $sub_category;
-		$data['nomeja'] = $nomeja;
+		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
+		$data['nomeja'] = $this->session->userdata('nomeja');
+		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
+		if($cart_count > 0){
+			$cart = $this->Item_model->cart_count($id_customer,$nomeja)->row();//tambahan	
+			$cart_total = $cart->total_qty;
+		}else{
+			$cart_total = 0;
+		}
+		$data['total_qty'] = $cart_total;
 			$this->load->view('ordermakanan',$data);
 		
 	}
-	public function subcreate($nomeja)
+	public function subcreate()
 	{
 		$uc = $this->session->userdata('username');
 		$data['total'] = $this->Item_model->totalSubOrder($uc);
 		$data['item'] = $this->Item_model->getDataSubOrder($uc);
-		$data['no_meja'] = $nomeja;
+		$data['no_meja'] = $this->session->userdata('nomeja');;
 		
 		$this->load->view('ordermakanan_view',$data);
 
 	}
-	public function batal($nomeja)
+	public function batal()
 	{
 		$ic = $this->session->userdata('id');
+		$nomeja = $this->session->userdata('nomeja');
 		$this->db->where('id_customer',$ic);
     	$this->db->delete('sh_t_sub_transactions');
     	redirect('ordermakanan/menu/Makanan/ayam/'.$nomeja);
 	}
-	public function search($nomeja)
+	public function search()
 	{
 		$keyword = $this->input->post('keyword');
 		$data['item'] = $this->Item_model->get_keyword($keyword);
 		$data['sub'] = $this->Item_model->sub_category();
-		$data['nomeja'] = $nomeja;
+		$data['nomeja'] = $this->session->userdata('nomeja');;
 		$this->load->view('ordermakanan',$data);
 	}
-	public function create($nomeja)
+	public function create()
 	{
 		$uc = $this->session->userdata('username');
 		$ic = $this->session->userdata('id');
@@ -92,6 +103,7 @@ class Ordermakanan extends CI_Controller {
 		$pesan = $this->input->post('pesan');
 		$harga = $this->input->post('harga');
 		$item_code = $this->input->post('no');
+		$nomeja = $this->session->userdata('nomeja');
 		
 		$nomer = 1;
 		for ($i = 0; $i < count($qty); $i++) {
@@ -120,11 +132,14 @@ class Ordermakanan extends CI_Controller {
 
 		
 	}
-	public function addcart($table)
+	public function addcart()
 	{
+		$table = $this->session->userdata('nomeja');
 		$uc = $this->session->userdata('username');
 		$ic = $this->session->userdata('id');
 		$qty = $this->input->post('qty');
+		$ata = $this->input->post('cek');
+		$qta = $this->input->post('qta');
 		$nama = $this->input->post('nama');
 		$pesan = $this->input->post('pesan');
 		$harga = $this->input->post('harga');
@@ -153,6 +168,8 @@ class Ordermakanan extends CI_Controller {
 				'id_table' => $table,
 				'extra_notes' => $pesan[$i],
 				'entry_date' => date('Y-m-d'),
+				'as_take_away' => $ata[$i],
+				'qty_take_away' => $qta[$i],
 			];
 			}
     
@@ -164,7 +181,7 @@ class Ordermakanan extends CI_Controller {
 	$result = $this->db->insert_batch('sh_cart',$data);
 			if ($result) {
 				$this->session->set_flashdata('success','Order Menu/Paket Berhasil Di Tambahkan Ke Dalam Cart');
-				redirect('selforder/home/'.$table);
+				redirect($_SERVER['HTTP_REFERER']);
 				// $where = array('qty' => 0);
 				// $this->Item_model->hapus_qty($where,'testing');
 			}else{
@@ -172,8 +189,9 @@ class Ordermakanan extends CI_Controller {
 			}
 	}
 	}
-	public function order($table)
+	public function order()
 	{
+		$table = $this->session->userdata('nomeja');
 		$qty = $this->input->post('qty');
 		$nama = $this->input->post('nama');
 		$pesan = $this->input->post('pesan');
