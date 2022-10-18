@@ -16,6 +16,23 @@
   background-color: #198754;
   color: white;
 }
+.active_rekomen{
+   background-color: #198754;
+  color: white;
+  
+  padding:16px 30px;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+  background-image: url("<?= base_url() ?>/assets/icon/badge.png");
+  background-repeat: no-repeat;
+  background-size: 55%;
+  background-position-y: 45%;
+  background-position-x: 50%;
+}
 .active_cold{
    background-color: #198754;
   color: white;
@@ -249,11 +266,11 @@ footer{
     <nav class="bg-success" style="z-index: 10000;position: fixed;width: 100%;">
   <div class="container">
   <div class="row">
-    <div class="col-9"><p style="padding-top: 13px;color: white;">Menu Minuman</p></div>
+    <div class="col-9"><p style="padding-top: 13px;color: white;">Menu Makanan</p></div>
     <div class="col-1" style="z-index: 10040000;"><a style="text-align: center;margin-top: 6px;" href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>" class=""><svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" color="white" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" style="margin-right: 10px;margin-top: 12px;margin-left: 10px;">
   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
 </svg></a></div>
-<div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><?= $cart_count ?></h3></strong></div>
+<div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><b id="cart_count"><?= $cart_count ?></b></h3></strong></div>
 
   </div>
 </div>
@@ -266,10 +283,10 @@ footer{
 
 <div class="wrapper" style="background-color: white;">
   <div class="item">
-      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/rekomendasi" class="button rekomendasi" style="text-decoration:none;padding: 10px 10px;"><p style="margin-top: 60px;margin-bottom: 1px;">Rekomendasi</p></a></div>
+      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/rekomendasi" class="button rekomendasi" style="text-decoration:none;padding: 10px 10px;padding-top: 18px;"><p style="margin-top: 60px;margin-bottom: 1px;">Rekomendasi</p></a></div>
  <?php foreach($sub as $i){ ?>
     <div class="item">
-      <a href="<?= base_url() ?>orderminuman/menu/Minuman/<?= $i['description'] ?>" class="button <?= str_replace(" ","_", $i['description']) ?>" style="text-decoration:none;padding-top: 20px;"><p style="margin-top: 50px;margin-bottom: 1px;"><?= str_replace(" ",".", $i['description'])?></p></a></div>
+      <a href="<?= base_url() ?>orderminuman/menu/Minuman/<?= $i['description'] ?>" class="button <?= str_replace(" ","_", $i['description']) ?>" style="text-decoration:none"><p style="margin-top: 60px;margin-bottom: 1px;"><?= str_replace(" ","_", $i['description'])?></p></a></div>
  <?php  }  ?>
 </div>
 
@@ -281,7 +298,7 @@ footer{
 <div class="container text-center">
   <div class="row">
     <div class="col">
-      <a href="<?= base_url() ?>orderminuman/menu/Minuman/<?= $i['description'] ?>/<?= $nomeja ?>" class="button <?= str_replace(" ","_", $i['description']) ?>"><?= str_replace(" ","_", $i['description'])?></a>
+      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/<?= $i['description'] ?>/<?= $nomeja ?>" class="button <?= str_replace(" ","_", $i['description']) ?>"><?= str_replace(" ","_", $i['description'])?></a>
       
     </div>
     <div class="col">
@@ -301,22 +318,24 @@ footer{
   </div> -->
 </div>
 </header>
-<form action="<?= base_url() ?>orderminuman/search" method="post">
-  <div class="container text-center" style="margin-top: 145px;display: flex;width:100%; position: fixed;z-index: 100000;">
+<form action="<?= base_url() ?>ordermakanan/search/<?= $nomeja ?>" method="post" >
+  <div class="container text-center" style="margin-top: 150px;display: flex;width:100%; position: fixed;z-index: 100000;">
   <div class="row">
-    <div class="col-10"><input type="text" name="keyword" class="form-control cari"  placeholder="Cari Menu Minuman..." style="border:1px solid #198754;"></div>
+    <div class="col-10"><input type="text" name="keyword" class="form-control cari"  placeholder="Cari Menu Makanan..." style="border:1px solid #198754;"></div>
     <div class="col-2"><button type="submit" class="btn btn-success">Cari</button></div>
   </div>
 </div>
 </form>
-<form action="<?= base_url() ?>orderminuman/addcart" method="post">  
-<div class="container text-center" style="margin-top: 200px;">
+<!-- <?= base_url() ?>ordermakanan/addcart/<?= $nomeja ?> -->
+<form action="#" method="post"> 
+<div class="container text-center" style="margin-top: 185px;">
   <div class="row row-cols-2">
     <?php foreach($item as $i){ ?>
 
-<div class="container text-center">
+<div class="container text-center" >
   <div class="row">
-    <div class="col" style="margin-top:2px;">
+    <div class="col" style="margin-top:10px;">
+       <p class="text_<?= str_replace(" ","_", $i->description)?> text"><?= $i->description ?></p>
       <?php if ( $i->image_path != "" ): ?>
         <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $i->id ?>"><img src="<?= $i->image_path ?>" alt="Red dot" style="width: 120px;height: 120px;border-radius: 20px;" /></a>
       <?php  else: ?>
@@ -331,17 +350,18 @@ footer{
       
     </div>
     <div class="col">
-      <p class="text_<?= str_replace(" ","_", $i->description)?> text"><?= $i->description ?></p>
+     <input type="text" name="pesan<?= $i->id ?>" id="pesan<?= $i->id ?>" class="form-control cari" placeholder="Masukan Pesan" style="border:1px solid #198754;">
       <div class="container text-center">
-  <div class="row">
+  <div class="row" style="margin-top: 5px;">
     <div class="col" >
-      <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;"> - </button>
+      <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="minus<?= $i->id ?>" onclick="OrderQty('minus','<?= $i->id ?>');"> - </button>
     </div>
     <div class="col">
-      <input type="text" name="qty[]" id="qty" value="0"  class="form-control num<?= $i->id ?>" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; ">
+
+      <input type="text" name="qty<?= $i->id ?>" id="qty<?= $i->id ?>" value="0"  class="form-control" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;">+</button>
+      <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="plus<?= $i->id ?>" onclick="OrderQty('plus','<?= $i->id ?>');">+</button>
     </div>
   </div>
 </div>
@@ -349,49 +369,52 @@ footer{
   <div class="row">
     <div class="col">
       
-      <input type="hidden" name="nama[]" id="nama" value="<?= $i->description ?>" class="form-control nama">
-      <input type="hidden" name="harga[]" id="harga" value="<?= $i->harga_weekday ?>" class="form-control harga">
-      <input type="hidden" name="no[]" id="harga" value="<?= $i->no ?>" class="form-control harga">
+      <input type="hidden" name="nama<?= $i->id ?>" id="nama<?= $i->id ?>" value="<?= $i->description ?>" class="form-control nama">
+      <input type="hidden" name="harga<?= $i->id ?>" id="harga<?= $i->id ?>" value="<?= $i->harga_weekday ?>" class="form-control harga">
+      <input type="hidden" name="no<?= $i->id ?>" id="no<?= $i->id ?>" value="<?= $i->no ?>" class="form-control harga">
       
     </div>
   </div>
 </div>
 <div class="container text-center">
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-7" style="color: #198754;">TakeAway?</div>
     <div class="col-5"><input type="checkbox" value="Take Away" onclick="getClick<?= $i->id ?>()" class="ta<?= $i->id ?>"></div>
-  </div>
+  </div> -->
 </div>
 <div class="container text-center" id="tk<?= $i->id ?>" hidden >
   <div class="row">
     <div class="col" >
-      <input type="hidden" name="cek[]" class="cek<?= $i->id ?>">
+      <input type="hidden" name="cek[]" class="cek<?= $i->id ?>" id="cek<?= $i->id ?>">
       <button type="button" class="btn btn-success mi<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;"> - </button>
     </div>
     <div class="col">
-      <input type="text" name="qta[]" id="qta" value="0"  class="form-control nu<?= $i->id ?>" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px;" readonly disabled="disabled">
+      <input type="text" name="qta[]" id="qta" value="0"  class="form-control nu<?= $i->id ?>" id="cek<?= $i->id ?>" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px;" readonly disabled="disabled">
     </div>
     <div class="col">
       <button type="button" class="btn btn-success pl<?= $i->id ?>" id="pls<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;">+</button>
     </div>
   </div>
 </div>
-      <input type="text" name="pesan[]" class="form-control cari" placeholder="Masukan Pesan" style="border:1px solid #198754;">
+      
     </div>
   </div>
 </div>
 
 <?php } ?>
+
   </div>
 </div>   
 <br>
-<br>
 <br>  
+<br>
+
 <footer>
 <div class="container text-center">
-<button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
-  Order
-</button>
+<!-- <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
+  Order 
+</button> -->
+<a href="<?php echo base_url('') ?>cart/home/<?= $nomeja ?>" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Lihat<i class="fa fa-cart-plus"></i> <b id="total_qty" align="right"><?= $total_qty;?></b></a>
 <a href="<?php echo base_url('') ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
 </form>
 <br>
@@ -427,8 +450,8 @@ footer{
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <?php foreach ($item as $i ): ?>
-<script type="text/javascript">
+  <?php //foreach ($item as $i ): ?>
+<!-- <script type="text/javascript">
   const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
   minus<?= $i->id ?> = document.querySelector(".minus<?= $i->id ?>"),
   num<?= $i->id ?> = document.querySelector(".num<?= $i->id ?>");
@@ -479,9 +502,9 @@ footer{
    console.log(b<?= $i->id ?>);
    }  
   });
-</script>
+</script> -->
   
-<?php endforeach ?>
+<?php //endforeach ?>
 <script type="text/javascript">
   const currentLocation = location.href;
   const menuItem = document.querySelectorAll('a');
@@ -513,26 +536,119 @@ footer{
         menuItem[i].className = "active_arabica"
        console.log(menuItem[i]);
       }
+      if (menuItem[i].href  === "http://dev.3guru.com:5082/selforderMG/orderminuman/menu/Minuman/rekomendasi") {
+        menuItem[i].className = "active_rekomen"
+       console.log(menuItem[i]);
+      }
       
     }
 
   }
 </script>
-<?php foreach ($item as $i ): ?>
+<?php //foreach ($item as $i ): ?>
 <script type="text/javascript">
 
-function getClick<?= $i->id ?>() {
-    var c = document.querySelector(".ta<?=$i->id?>");
-    var cek = document.querySelector(".cek<?=$i->id?>");
-    if (c.checked == true) {
-      $('#tk<?= $i->id ?>').prop('hidden', false);
-      $(".nu<?= $i->id ?>").prop('disabled', false);
-      cek.value=1;
-    }else{
-      $('#tk<?= $i->id ?>').prop('hidden', true);
-      $(".nu<?= $i->id ?>").prop('disabled', true);
-    }
+// function getClick<?= $i->id ?>() {
+//     var c = document.querySelector(".ta<?=$i->id?>");
+//     var cek = document.querySelector(".cek<?=$i->id?>");
+//     if (c.checked == true) {
+//       $('#tk<?= $i->id ?>').prop('hidden', false);
+//       $(".nu<?= $i->id ?>").prop('disabled', false);
+//       cek.value=1;
+//     }else{
+//       $('#tk<?= $i->id ?>').prop('hidden', true);
+//       $(".nu<?= $i->id ?>").prop('disabled', true);
+//     }
+//   }
+//   function tambahdata<?= $i->id ?>() {
+     
+//     var nama =document.getElementById('nama<?= $i->id ?>').value;
+//     var qty =document.getElementById('qty<?= $i->id ?>').value;
+//     var harga =document.getElementById('harga<?= $i->id ?>').value;
+//     var pesan =document.getElementById('pesan<?= $i->id ?>').value;
+//     var no =document.getElementById('no<?= $i->id ?>').value;
+   
+//       $.ajax({
+//       type:'POST',
+//       data:'nama[]='+nama+'&harga[]='+harga+'&no[]='+no+'&pesan[]='+pesan+'&qty[]='+qty,
+//       // data: data,
+//       url: '<?= base_url().'orderminuman/addcart' ?>',
+//       dataType:'json',
+//       success: function(hasil){
+//         console.log('BERHASIL');
+//       }
+//     });
+    
+    
+    
+//   }
+//   function kurangdata<?= $i->id ?>($id) {
+     
+//     var nama =document.getElementById('nama<?= $i->id ?>').value;
+//     var qty =document.getElementById('qty<?= $i->id ?>').value;
+//     var harga =document.getElementById('harga<?= $i->id ?>').value;
+//     var pesan =document.getElementById('pesan<?= $i->id ?>').value;
+//     var no =document.getElementById('no<?= $i->id ?>').value;
+//     var id = $id;
+//     console.log(qty);
+//     // var cek =document.getElementById('cek<?= $i->id ?>').value;
+//     // var qta =document.getElementById('qta<?= $i->id ?>').value;
+//     // console.log(nama);
+//     // console.log(qty);
+//     // console.log(pesan);
+//     // console.log(no);
+//     // if (nama != nama) {
+//     //   console.log('MENU SAMA');
+//     // }else{
+//       $.ajax({
+//       type:'POST',
+//       data:'nama[]='+nama+'&harga[]='+harga+'&no[]='+no+'&pesan[]='+pesan+'&qty[]='+qty+'&id[]='+id,
+//       // data: data,
+//       url: '<?= base_url().'orderminuman/updatecart' ?>',
+//       dataType:'json',
+      
+//     });
+//     // }
+    
+    
+    
+//   }
+  function OrderQty(tipe,id) {
+    var itemCode = $('#no' + id).val();
+    var desc = $('#nama' + id).val();
+    var price = $('#harga' + id).val();
+    var notes = $('#pesan' + id).val();
+    $.ajax({
+      type:'POST',
+      data: {tipe: tipe,id: id,item_code: itemCode,description: desc,unit_price: price,extra_notes: notes},
+      url: '<?= base_url().'ordermakanan/orderqty' ?>',
+      dataType:'json',})
+      .done(function (hasil){
+        if(hasil.status == true){
+          $('#qty' + id).val(hasil.new_qty);
+          $('#pesan' + id).val(hasil.pesan);
+          $('#cart_count').text(hasil.cart_count);
+          $('#total_qty').text(hasil.total_qty);
+        }
+      });
   }
 </script>
-<?php endforeach ?>
+<?php //endforeach ?>
+<!-- <script type="text/javascript">
+  
+  $(document).ready(function(){
+    setInterval(function(){
+      $.ajax({
+      type:'POST',
+      url: '<?= base_url().'ordermakanan/jmlcart' ?>',
+      dataType:'json',
+      success:function(data){
+          $("#target").html(data.total);
+          $("#cart").html(data.total);
+      }
+    });
+    },100);
+    
+  });
+</script> -->
   <?php $this->load->view('template/footer') ?>

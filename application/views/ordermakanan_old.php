@@ -1,4 +1,5 @@
 <?php $this->load->view('template/head') ?>
+
     <style type="text/css">
       .button {
   background-color: white;
@@ -198,6 +199,7 @@
   background-size: 70%;
   background-position-y: 20%;
   background-position-x: 50%;
+
 }
 .button:hover {
   background-color: #198754; /* Green */
@@ -379,7 +381,7 @@ footer{
     <div class="col-1" style="z-index: 10040000;"><a style="text-align: center;margin-top: 6px;" href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>" class=""><svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" color="white" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" style="margin-right: 10px;margin-top: 12px;margin-left: 10px;">
   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
 </svg></a></div>
-<div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><b id="cart_count"><?= $cart_count ?></b></h3></strong></div>
+<div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><b align="right" id="cart"></b></h3></strong></div>
 
   </div>
 </div>
@@ -459,18 +461,18 @@ footer{
       
     </div>
     <div class="col">
-     <input type="text" name="pesan<?= $i->id ?>" id="pesan<?= $i->id ?>" class="form-control cari" placeholder="Masukan Pesan" style="border:1px solid #198754;">
+     <input type="text" name="pesan[]" id="pesan<?= $i->id ?>" class="form-control cari" placeholder="Masukan Pesan" style="border:1px solid #198754;">
       <div class="container text-center">
   <div class="row" style="margin-top: 5px;">
     <div class="col" >
-      <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="minus<?= $i->id ?>" onclick="OrderQty('minus','<?= $i->id ?>');"> - </button>
+      <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="btn-hapus" onclick="setTimeout(kurangdata<?= $i->id ?>(<?= $i->id ?>), 30);"> - </button>
     </div>
     <div class="col">
 
-      <input type="text" name="qty<?= $i->id ?>" id="qty<?= $i->id ?>" value="0"  class="form-control" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
+      <input type="text" name="qty[]" id="qty<?= $i->id ?>" value="0"  class="form-control num<?= $i->id ?>" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
     </div>
     <div class="col">
-      <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="plus<?= $i->id ?>" onclick="OrderQty('plus','<?= $i->id ?>');">+</button>
+      <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="btn-tambah" onclick="setTimeout(tambahdata<?= $i->id ?>, 30);">+</button>
     </div>
   </div>
 </div>
@@ -478,9 +480,9 @@ footer{
   <div class="row">
     <div class="col">
       
-      <input type="hidden" name="nama<?= $i->id ?>" id="nama<?= $i->id ?>" value="<?= $i->description ?>" class="form-control nama">
-      <input type="hidden" name="harga<?= $i->id ?>" id="harga<?= $i->id ?>" value="<?= $i->harga_weekday ?>" class="form-control harga">
-      <input type="hidden" name="no<?= $i->id ?>" id="no<?= $i->id ?>" value="<?= $i->no ?>" class="form-control harga">
+      <input type="hidden" name="nama[]" id="nama<?= $i->id ?>" value="<?= $i->description ?>" class="form-control nama">
+      <input type="hidden" name="harga[]" id="harga<?= $i->id ?>" value="<?= $i->harga_weekday ?>" class="form-control harga">
+      <input type="hidden" name="no[]" id="no<?= $i->id ?>" value="<?= $i->no ?>" class="form-control harga">
       
     </div>
   </div>
@@ -523,7 +525,7 @@ footer{
 <!-- <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
   Order 
 </button> -->
-<a href="<?php echo base_url('') ?>cart/home/<?= $nomeja ?>" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Lihat<i class="fa fa-cart-plus"></i> <b id="total_qty" align="right"><?= $total_qty;?></b></a>
+<a href="<?php echo base_url('') ?>cart/home/<?= $nomeja ?>" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Lihat<i class="fa fa-cart-plus"></i> <b align="right" id="target"></b></a>
 <a href="<?php echo base_url('') ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
 </form>
 <br>
@@ -559,9 +561,9 @@ footer{
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <?php //foreach ($item as $i ): ?>
+  <?php foreach ($item as $i ): ?>
 <script type="text/javascript">
-  /*const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
+  const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
   minus<?= $i->id ?> = document.querySelector(".minus<?= $i->id ?>"),
   num<?= $i->id ?> = document.querySelector(".num<?= $i->id ?>");
 
@@ -575,7 +577,7 @@ footer{
    a<?= $i->id ?>++;
    num<?= $i->id ?>.value = a<?= $i->id ?>;
    
-   console.log(a<?= $i->id ?>); 
+   // console.log(a<?= $i->id ?>); 
   });
   minus<?= $i->id ?>.addEventListener("click", ()=>{
    
@@ -585,7 +587,7 @@ footer{
           a<?= $i->id ?>--;
    num<?= $i->id ?>.value = a<?= $i->id ?>;
    nu<?= $i->id ?>.value = a<?= $i->id ?>;
-   console.log(a<?= $i->id ?>);
+   // console.log(a<?= $i->id ?>);
    }  
   });
 
@@ -600,7 +602,7 @@ footer{
     pls<?= $i->id ?>.disabled = true;
    }
    nu<?= $i->id ?>.value = b<?= $i->id ?>;
-   console.log(b<?= $i->id ?>); 
+   // console.log(b<?= $i->id ?>); 
  }
   });
   mi<?= $i->id ?>.addEventListener("click", ()=>{
@@ -610,13 +612,13 @@ footer{
         if (inputValueB >= 1) {
           b<?= $i->id ?>--;
    nu<?= $i->id ?>.value = b<?= $i->id ?>;
-   console.log(b<?= $i->id ?>);
+   // console.log(b<?= $i->id ?>);
    }  
-  });*/
+  });
 </script>
 
   
-<?php //endforeach ?>
+<?php endforeach ?>
 <script type="text/javascript">
   const currentLocation = location.href;
   const menuItem = document.querySelectorAll('a');
@@ -673,27 +675,98 @@ footer{
 
   }
 </script>
-<?php //foreach ($item as $i ): ?>
+<?php foreach ($item as $i ): ?>
 <script type="text/javascript">
-  function OrderQty(tipe,id) {
-    var itemCode = $('#no' + id).val();
-    var desc = $('#nama' + id).val();
-    var price = $('#harga' + id).val();
-    var notes = $('#pesan' + id).val();
-    $.ajax({
+
+function getClick<?= $i->id ?>() {
+    var c = document.querySelector(".ta<?=$i->id?>");
+    var cek = document.querySelector(".cek<?=$i->id?>");
+    if (c.checked == true) {
+      $('#tk<?= $i->id ?>').prop('hidden', false);
+      $(".nu<?= $i->id ?>").prop('disabled', false);
+      console.log(cek);
+      cek.value=1;
+    }else{
+      $('#tk<?= $i->id ?>').prop('hidden', true);
+      $(".nu<?= $i->id ?>").prop('disabled', true);
+    }
+  }
+
+  function tambahdata<?= $i->id ?>() {
+     
+    var nama =document.getElementById('nama<?= $i->id ?>').value;
+    var qty =document.getElementById('qty<?= $i->id ?>').value;
+    var harga =document.getElementById('harga<?= $i->id ?>').value;
+    var pesan =document.getElementById('pesan<?= $i->id ?>').value;
+    var no =document.getElementById('no<?= $i->id ?>').value;
+    // console.log(nama);
+    // console.log(qty);
+    // console.log(pesan);
+    // console.log(no);
+      $.ajax({
       type:'POST',
-      data: {tipe: tipe,id: id,item_code: itemCode,description: desc,unit_price: price,extra_notes: notes},
-      url: '<?= base_url().'ordermakanan/orderqty' ?>',
-      dataType:'json',})
-      .done(function (hasil){
-        if(hasil.status == true){
-          $('#qty' + id).val(hasil.new_qty);
-          $('#pesan' + id).val(hasil.pesan);
-          $('#cart_count').text(hasil.cart_count);
-          $('#total_qty').text(hasil.total_qty);
-        }
-      });
+      data:'nama[]='+nama+'&harga[]='+harga+'&no[]='+no+'&pesan[]='+pesan+'&qty[]='+qty,
+      // data: data,
+      url: '<?= base_url().'ordermakanan/addcart' ?>',
+      dataType:'json',
+      success: function(hasil){
+        console.log('BERHASIL');
+      }
+    });
+    
+    
+    
+  }
+  function kurangdata<?= $i->id ?>($id) {
+     
+    var nama =document.getElementById('nama<?= $i->id ?>').value;
+    var qty =document.getElementById('qty<?= $i->id ?>').value;
+    var harga =document.getElementById('harga<?= $i->id ?>').value;
+    var pesan =document.getElementById('pesan<?= $i->id ?>').value;
+    var no =document.getElementById('no<?= $i->id ?>').value;
+    var id = $id;
+    console.log(qty);
+    // var cek =document.getElementById('cek<?= $i->id ?>').value;
+    // var qta =document.getElementById('qta<?= $i->id ?>').value;
+    // console.log(nama);
+    // console.log(qty);
+    // console.log(pesan);
+    // console.log(no);
+    // if (nama != nama) {
+    //   console.log('MENU SAMA');
+    // }else{
+      $.ajax({
+      type:'POST',
+      data:'nama[]='+nama+'&harga[]='+harga+'&no[]='+no+'&pesan[]='+pesan+'&qty[]='+qty+'&id[]='+id,
+      // data: data,
+      url: '<?= base_url().'ordermakanan/updatecart' ?>',
+      dataType:'json',
+      
+    });
+    // }
+    
+    
+    
   }
 </script>
-<?php //endforeach ?>
+<?php endforeach ?>
+
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+    setInterval(function(){
+      $.ajax({
+      type:'POST',
+      url: '<?= base_url().'ordermakanan/jmlcart' ?>',
+      dataType:'json',
+      success:function(data){
+          $("#target").html(data.total);
+          $("#cart").html(data.total);
+      }
+    });
+    },100);
+    
+  });
+</script>
+
   <?php $this->load->view('template/footer') ?>

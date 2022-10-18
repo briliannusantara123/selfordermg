@@ -68,6 +68,20 @@ class Ordermakanan extends CI_Controller {
 			$this->load->view('ordermakanan',$data);
 		
 	}
+	public function jmlcart(){
+		$id_customer = $this->session->userdata('id');
+		$nomeja = $this->session->userdata('nomeja');
+		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
+		if($cart_count > 0){
+			$cart = $this->Item_model->cart_count($id_customer,$nomeja)->row();//tambahan	
+			$cart_total = $cart->total_qty;
+		}else{
+			$cart_total = 0;
+		}
+		$result['total'] = $cart_total;
+		$result['msg'] = "Berhasil di refresh secara Realtime";
+		echo json_encode($result);
+	}
 	public function subcreate()
 	{
 		$uc = $this->session->userdata('username');
@@ -143,106 +157,6 @@ class Ordermakanan extends CI_Controller {
 
 		
 	}
-
-	public function orderqty() 
-	{
-		$table = $this->session->userdata('nomeja');
-		$uc = $this->session->userdata('username');
-		$ic = $this->session->userdata('id');
-		$post = $this->input->post();
-		$trans = $this->db->get_Where('sh_t_transactions', array('id_customer'=> $ic))->row();
-		if($post['tipe']=='plus' && $post['item_code'] != ''){
-			$cek_count = $this->Item_model->get_cart($ic,$table,$post['item_code'])->num_rows();
-			if($cek_count > 0){
-				$cek_cart = $this->Item_model->get_cart($ic,$table,$post['item_code'])->row();
-				$pesan = $post['extra_notes'];
-				if($pesan != ''){
-					$data = [
-						'qty' => ($cek_cart->qty+1),
-						'extra_notes' => $post['extra_notes'],
-					];
-				}else{
-					$data = [
-						'qty' => ($cek_cart->qty+1),
-					];	
-				}
-				
-				$this->Item_model->save('sh_cart',$data, ['id'=>$cek_cart->id]);
-				$cart_count = $this->Item_model->hitungcart($table);
-				$carts = $this->Item_model->cart_count($ic,$table)->num_rows();
-				if($carts > 0){
-					$cart = $this->Item_model->cart_count($ic,$table)->row();	
-					$total_qty = $cart->total_qty;
-				}else{
-					$total_qty = 0;
-				}
-				echo json_encode(array('status'=> True,'new_qty'=> ($cek_cart->qty+1),'pesan'=>$pesan,'cart_count'=>(int)$cart_count,'total_qty'=>(int)$total_qty));
-			}else{
-				$pesan = $post['extra_notes'];
-				$data = [
-					'item_code' => $post['item_code'],
-					'id_trans' => $trans->id,
-					'id_customer' => $ic,
-					'qty' => 1,
-					'cabang' => $trans->cabang,
-					'unit_price' => $post['unit_price'],
-					'description' => $post['description'],
-					'entry_by' => $this->session->userdata('username'),
-					'id_table' => $table,
-					'extra_notes' => $post['extra_notes'],
-					'entry_date' => date('Y-m-d H:i:s'),
-				];
-				
-				$cart_id = $this->Item_model->save('sh_cart',$data);
-				$cart_count = $this->Item_model->hitungcart($table);
-
-				$carts = $this->Item_model->cart_count($ic,$table)->num_rows();
-				if($carts > 0){
-					$cart = $this->Item_model->cart_count($ic,$table)->row();	
-					$total_qty = $cart->total_qty;
-				}else{
-					$total_qty = 0;
-				}
-				
-				if($cart_id){
-					echo json_encode(array('status'=> True,'new_qty'=> 1,'pesan'=>$pesan,'cart_count'=>(int)$cart_count,'total_qty'=>(int)$total_qty));	
-				}
-			}
-		}else if($post['tipe']=='minus' && $post['item_code'] != ''){
-			$cek_count = $this->Item_model->get_cart($ic,$table,$post['item_code'])->num_rows();
-			if($cek_count > 0){
-				$cek_cart = $this->Item_model->get_cart($ic,$table,$post['item_code'])->row();
-				if($cek_cart->qty == 1){
-					$this->db->delete('sh_cart',['id'=>$cek_cart->id]);
-					$cart_count = $this->Item_model->hitungcart($table);
-					$carts = $this->Item_model->cart_count($ic,$table)->num_rows();
-					if($carts > 0){
-						$cart = $this->Item_model->cart_count($ic,$table)->row();	
-						$total_qty = $cart->total_qty;
-					}else{
-						$total_qty = 0;
-					}
-					echo json_encode(array('status'=> True,'new_qty'=> 0,'pesan'=>'','cart_count'=>(int)$cart_count,'total_qty'=>(int)$total_qty));
-				}else{
-					$pesan = $post['extra_notes'];
-					$data = [
-						'qty' => ($cek_cart->qty-1),
-					];
-					$this->Item_model->save('sh_cart',$data, ['id'=>$cek_cart->id]);
-					$cart_count = $this->Item_model->hitungcart($table);
-					$carts = $this->Item_model->cart_count($ic,$table)->num_rows();
-					if($carts > 0){
-						$cart = $this->Item_model->cart_count($ic,$table)->row();	
-						$total_qty = $cart->total_qty;
-					}else{
-						$total_qty = 0;
-					}
-					echo json_encode(array('status'=> True,'new_qty'=> ($cek_cart->qty-1),'pesan'=>$pesan,'cart_count'=>(int)$cart_count,'total_qty'=>(int)$total_qty));
-				}
-			}
-		}
-	}
-
 	public function addcart()
 	{
 		$table = $this->session->userdata('nomeja');

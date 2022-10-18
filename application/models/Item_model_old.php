@@ -226,21 +226,6 @@ public function get_info_item($item_code, $data)
 	        $query = $this->db->get()->result_array();
 	        return $query;
 		}
-		public function get_Cart($ic,$table,$itemCode)
-		{
-			$this->db->select('*');
-	        $this->db->from('sh_cart');
-	        $this->db->where(['id_customer'=>$ic,'id_table'=>$table,'item_code'=>$itemCode]);
-	        $query = $this->db->get();
-	        return $query;
-		}
-		public function save($table,$data, $where='') {
-			if ($where == '') {
-				$this->db->insert($table, $data);
-				return $this->db->insert_id();
-			}
-			return $this->db->update($table, $data, $where);			
-		}
 		public function cart($ic)
 		{
 			$this->db->select('d.item_code,m.image_path,d.*');

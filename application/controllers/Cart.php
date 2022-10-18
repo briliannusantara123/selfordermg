@@ -192,6 +192,8 @@ function __construct()
     			$this->db->delete('sh_t_sub_transactions');
     			$this->db->where('id_customer',$ic);
     			$this->db->delete('sh_cart');
+
+    			$this->db->query("update sh_t_transactions set date_order_menu='".date('Y-m-d H:i:s')."',is_order_menu_active=1,start_time_order='".date('H:i:s')."',checker_printed = 1 where id = '".$id_trans->id."' and id_customer = '".$ic."'");
     			$this->session->set_flashdata('success','Order Menu/Paket Berhasil Di Tambahkan');
 				redirect('selforder/home/'.$table);
 				// $where = array('qty' => 0);
