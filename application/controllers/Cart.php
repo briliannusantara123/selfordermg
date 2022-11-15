@@ -26,16 +26,26 @@ function __construct()
 		
 		$this->load->view('ordersementara',$data);
 	}
-	public function home($nomeja)
+	public function home($nomeja,$cek,$sub=NULL)
 	{
 		$id_customer = $this->session->userdata('id');
 		// $data['total'] = $this->Item_model->totalSubOrder($uc);
 		$data['item'] = $this->Item_model->cart($id_customer)->result();
 		$data['nomeja'] = $nomeja;
-		
+		if ($cek == 'Makanan') {
+			$log = 'ordermakanan/menu/Makanan/'.$sub;
+		}elseif ($cek == 'Minuman') {
+			$log = 'orderminuman/menu/Minuman/'.$sub;
+		}else{
+			$log = 'selforder/home/'.$nomeja;
+		}
+
+		$data['log'] = $log;
+		$data['cek'] = $cek;
+		$data['sub'] = $sub;
 		$this->load->view('cart',$data);
 	}
-	public function create($nomeja)
+	public function create($nomeja,$cek,$sub)
 	{
 		$uc = $this->session->userdata('username');
 		$ic = $this->session->userdata('id');
@@ -67,7 +77,7 @@ function __construct()
 	}
 	$result = $this->db->insert_batch('sh_t_sub_transactions',$data);
 			if ($result) {
-				redirect('ordermakanan/subcreate/'.$nomeja);
+				redirect('ordermakanan/subcreate/'.$nomeja.'/'.$cek.'/'.$sub);
 				// $where = array('qty' => 0);
 				// $this->Item_model->hapus_qty($where,'testing');
 			}else{
@@ -76,12 +86,12 @@ function __construct()
 
 		
 	}
-	public function batal($nomeja)
+	public function batal($nomeja,$cek,$sub)
 	{
 		$ic = $this->session->userdata('id');
 		$this->db->where('id_customer',$ic);
     	$this->db->delete('sh_t_sub_transactions');
-    	redirect('cart/home/'.$nomeja);
+    	redirect('cart/home/'.$nomeja.'/'.$cek.'/'.$sub);
 	}
 	public function order($table)
 	{
@@ -175,8 +185,6 @@ function __construct()
 				'checker_printed' => 1,
 				'created_date' => date('Y-m-d'),
 				'order_type' => $order_stat,
-				'as_take_away' => $ata[$i],
-				'qty_take_away' => $qta[$i],
 			];
 			 }
     
@@ -202,16 +210,20 @@ function __construct()
 				echo "gagal order";
 			}
 	}
-	public function delete($id,$nama,$nomeja)
+	public function delete($id,$nama,$nomeja,$cek,$sub)
 	{
 		// echo $id;exit();
 		$nm = str_replace("%20"," ", $nama);
 		$this->db->where('id',$id);
     	$this->db->delete('sh_cart');
     	$this->session->set_flashdata('success',$nm.' Berhasil Dihapus dari Cart');
-		redirect('cart/home/'.$nomeja);
+		if ($cek == 'home') {
+    		redirect('cart/home/'.$nomeja.'/'.$cek);
+    	}else{
+    		redirect('cart/home/'.$nomeja.'/'.$cek.'/'.$sub);
+    	}
 	}
-	public function ubah($id,$nama,$nomeja)
+	public function ubah($id,$nama,$nomeja,$cek,$sub)
 	{
 		// echo $id;exit();
 		$qty = $this->input->post('qty');
@@ -224,6 +236,11 @@ function __construct()
 		$this->db->where('id',$id);
     	$this->db->update('sh_cart',$data);
     	$this->session->set_flashdata('success',$nm.' Berhasil Di Ubah');
-		redirect('cart/home/'.$nomeja);
+    	if ($cek == 'home') {
+    		redirect('cart/home/'.$nomeja.'/'.$cek);
+    	}else{
+    		redirect('cart/home/'.$nomeja.'/'.$cek.'/'.$sub);
+    	}
+		
 	}
 }

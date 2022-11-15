@@ -55,6 +55,7 @@ class Ordermakanan extends CI_Controller {
 		$data['item'] = $this->Item_model->getData($tipe,$sub_category);
 		$data['sub'] = $this->Item_model->sub_category();
 		$data['s'] = $sub_category;
+		$data['ic'] = $id_customer;
 		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
 		$data['nomeja'] = $this->session->userdata('nomeja');
 		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
@@ -68,12 +69,14 @@ class Ordermakanan extends CI_Controller {
 			$this->load->view('ordermakanan',$data);
 		
 	}
-	public function subcreate()
+	public function subcreate($nomeja,$cek,$sub=NULL)
 	{
 		$uc = $this->session->userdata('username');
 		$data['total'] = $this->Item_model->totalSubOrder($uc);
 		$data['item'] = $this->Item_model->getDataSubOrder($uc);
-		$data['no_meja'] = $this->session->userdata('nomeja');;
+		$data['no_meja'] = $this->session->userdata('nomeja');
+		$data['cek'] = $cek;
+		$data['sub'] = $sub;
 		
 		$this->load->view('ordermakanan_view',$data);
 
@@ -91,6 +94,7 @@ class Ordermakanan extends CI_Controller {
 		$id_customer = $this->session->userdata('id');
 		$nomeja = $this->session->userdata('nomeja');
 		$keyword = $this->input->post('keyword');
+		$data['s'] = 'Ayam';
 		$data['item'] = $this->Item_model->get_keyword($keyword);
 		$data['sub'] = $this->Item_model->sub_category();
 		$data['nomeja'] = $this->session->userdata('nomeja');

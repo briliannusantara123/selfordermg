@@ -286,6 +286,9 @@ h1{
 
   </div>
 </div>
+<script type="text/javascript">
+  localStorage.clear();
+</script>
 
 <!-- Modal -->
 

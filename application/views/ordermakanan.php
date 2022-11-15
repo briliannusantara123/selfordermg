@@ -147,6 +147,7 @@
   background-size: 70%;
   background-position-y: 20%;
   background-position-x: 50%;
+  
 }
 .active_paket{
    background-color: #198754;
@@ -222,7 +223,7 @@
   margin-bottom: 50px;
   border:1px solid #198754;
   display: flex;
-  overflow-x: auto; 
+  overflow: scroll; 
 }
 .wrapper .item{
   
@@ -376,7 +377,7 @@ footer{
   <div class="container">
   <div class="row">
     <div class="col-9"><p style="padding-top: 13px;color: white;">Menu Makanan</p></div>
-    <div class="col-1" style="z-index: 10040000;"><a style="text-align: center;margin-top: 6px;" href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>" class=""><svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" color="white" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" style="margin-right: 10px;margin-top: 12px;margin-left: 10px;">
+    <div class="col-1" style="z-index: 10040000;"><a style="text-align: center;margin-top: 6px;" href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>/Makanan/<?= $s ?>" class=""><svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" color="white" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" style="margin-right: 10px;margin-top: 12px;margin-left: 10px;">
   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
 </svg></a></div>
 <div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><b id="cart_count"><?= $cart_count ?></b></h3></strong></div>
@@ -395,7 +396,7 @@ footer{
       <a href="<?= base_url() ?>ordermakanan/menu/Makanan/rekomendasi" class="button rekomendasi" style="text-decoration:none;padding: 10px 10px;padding-top: 18px;"><p style="margin-top: 60px;margin-bottom: 1px;">Rekomendasi</p></a></div>
  <?php foreach($sub as $i){ ?>
     <div class="item">
-      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/<?= $i['description'] ?>" class="button <?= str_replace(" ","_", $i['description']) ?>" style="text-decoration:none"><p style="margin-top: 60px;margin-bottom: 1px;"><?= str_replace(" ","_", $i['description'])?></p></a></div>
+      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/<?= $i['description'] ?>" class="button <?= str_replace(" ","_", $i['description']) ?>"  style="text-decoration:none"><p style="margin-top: 60px;margin-bottom: 1px;"><?= str_replace(" ","_", $i['description'])?></p></a></div>
  <?php  }  ?>
 </div>
 
@@ -466,8 +467,15 @@ footer{
       <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="minus<?= $i->id ?>" onclick="OrderQty('minus','<?= $i->id ?>');"> - </button>
     </div>
     <div class="col">
-
-      <input type="text" name="qty<?= $i->id ?>" id="qty<?= $i->id ?>" value="0"  class="form-control" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
+        <!-- <?php if ($i->id_customer != $ic): ?>
+          <input type="text" name="qty<?= $i->id ?>" id="qty<?= $i->id ?>"  value="0"  class="form-control" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
+        <?php  elseif ($i->id_customer == NULL): ?>
+          <input type="text" name="qty<?= $i->id ?>" id="qty<?= $i->id ?>"  value="NULL"  class="form-control" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
+        <?php else: ?> 
+         <input type="text" name="qty<?= $i->id ?>" id="qty<?= $i->id ?>"  value="<?= $i->qty ?>"  class="form-control" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
+        <?php endif ?> -->
+        <input type="text" name="qty<?= $i->id ?>" id="qty<?= $i->id ?>"   class="form-control" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
+      
     </div>
     <div class="col">
       <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="plus<?= $i->id ?>" onclick="OrderQty('plus','<?= $i->id ?>');">+</button>
@@ -523,7 +531,7 @@ footer{
 <!-- <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
   Order 
 </button> -->
-<a href="<?php echo base_url('') ?>cart/home/<?= $nomeja ?>" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Lihat<i class="fa fa-cart-plus"></i> <b id="total_qty" align="right"><?= $total_qty;?></b></a>
+<a href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>/Makanan/<?= $s ?>" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Lihat<i class="fa fa-cart-plus"></i> <b id="total_qty" align="right"><?= $total_qty;?></b></a>
 <a href="<?php echo base_url('') ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
 </form>
 <br>
@@ -551,14 +559,7 @@ footer{
   </div>
 </div>
 <?php endforeach ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   
   <?php //foreach ($item as $i ): ?>
 <script type="text/javascript">
   /*const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
@@ -672,9 +673,23 @@ footer{
     }
 
   }
+
 </script>
-<?php //foreach ($item as $i ): ?>
+
+<?php foreach ($item as $i ): ?>
 <script type="text/javascript">
+  let qty<?=$i->id?> = document.querySelector('#qty<?=$i->id?>');
+  if (localStorage.getItem('qtmk<?=$i->id?>')) {
+         qty<?=$i->id?>.value = localStorage.getItem('qtmk<?=$i->id?>');
+         }else{
+          qty<?=$i->id?>.value = 0;
+        }
+
+  
+</script>
+<?php endforeach ?>
+<script type="text/javascript">
+  
   function OrderQty(tipe,id) {
     var itemCode = $('#no' + id).val();
     var desc = $('#nama' + id).val();
@@ -686,8 +701,11 @@ footer{
       url: '<?= base_url().'ordermakanan/orderqty' ?>',
       dataType:'json',})
       .done(function (hasil){
+        localStorage.setItem('qtmk' + id,hasil.new_qty);
+        
         if(hasil.status == true){
-          $('#qty' + id).val(hasil.new_qty);
+          
+          $('#qty' + id).val(localStorage.getItem('qtmk'+ id));
           $('#pesan' + id).val(hasil.pesan);
           $('#cart_count').text(hasil.cart_count);
           $('#total_qty').text(hasil.total_qty);
@@ -695,5 +713,11 @@ footer{
       });
   }
 </script>
-<?php //endforeach ?>
+<script>
+function myFunction() {
+  const html = document.documentElement;
+  html.scrollLeft += 30;
+  html.scrollTop += 10;
+}
+</script>
   <?php $this->load->view('template/footer') ?>

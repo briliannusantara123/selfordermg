@@ -54,6 +54,7 @@ class Orderminuman extends CI_Controller {
 		$nomeja = $this->session->userdata('nomeja');
 		$data['item'] = $this->Item_model->getData($tipe,$sub_category);
 		$data['sub'] = $this->Item_model->sub_category_minuman();
+		$data['s'] = $sub_category;
 		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
 		$data['nomeja'] = $this->session->userdata('nomeja');
 		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();

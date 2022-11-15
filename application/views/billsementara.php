@@ -151,6 +151,16 @@
               padding-bottom: 40px;
             }
         }
+        footer{
+  text-align: center;
+  background-color: white;
+  margin-top: 10px;
+  /*position: absolute;*/
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 200000;
+}
  </style>
     <nav class="bg-success">
   <div class="container">
@@ -222,7 +232,7 @@
 </table>
   
 </div>  
-<div class="container">
+<div class="container" style="margin-bottom: 200px;">
   <table class="table">
   <tbody>
     <tr>
@@ -269,6 +279,8 @@
 </table>
 </div>
 <br>
+
+<footer>
 <div class="container text-center">
   <div class="row">
     <div class="col">
@@ -283,7 +295,7 @@
     </div>
   </div>
 </div>
-
+</footer>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

@@ -54,13 +54,13 @@
 <div class="container text-center">
   <div class="row">
     <div class="col">
-      <button type="submit" class="btn btn-outline-success" style="padding-top: 32px;padding-bottom: 32px;padding-left: 50px;padding-right: 50px;margin-top: 30px;">
+      <button onclick="order()" type="submit" class="btn btn-outline-success" style="padding-top: 32px;padding-bottom: 32px;padding-left: 50px;padding-right: 50px;margin-top: 30px;">
   Ya, Order
 </button>
     </div>
     
     <div class="col">
-    	<a href="<?= base_url() ?>cart/batal/<?= $no_meja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;margin-top: 30px;">Tunggu, Kembali</a>
+    	<a href="<?= base_url() ?>cart/batal/<?= $no_meja ?>/<?= $cek ?>/<?= $sub ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;margin-top: 30px;">Tunggu, Kembali</a>
       
     </div>
     </form>
@@ -78,4 +78,9 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
+  <script type="text/javascript">
+    function order(){
+  localStorage.clear();
+}
+  </script>
 </html>

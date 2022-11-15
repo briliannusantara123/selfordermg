@@ -267,7 +267,7 @@ footer{
   <div class="container">
   <div class="row">
     <div class="col-9"><p style="padding-top: 13px;color: white;">Menu Makanan</p></div>
-    <div class="col-1" style="z-index: 10040000;"><a style="text-align: center;margin-top: 6px;" href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>" class=""><svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" color="white" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" style="margin-right: 10px;margin-top: 12px;margin-left: 10px;">
+    <div class="col-1" style="z-index: 10040000;"><a style="text-align: center;margin-top: 6px;" href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>/Minuman/<?= $s ?>" class=""><svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" color="white" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" style="margin-right: 10px;margin-top: 12px;margin-left: 10px;">
   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
 </svg></a></div>
 <div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><b id="cart_count"><?= $cart_count ?></b></h3></strong></div>
@@ -414,7 +414,7 @@ footer{
 <!-- <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
   Order 
 </button> -->
-<a href="<?php echo base_url('') ?>cart/home/<?= $nomeja ?>" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Lihat<i class="fa fa-cart-plus"></i> <b id="total_qty" align="right"><?= $total_qty;?></b></a>
+<a href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>/Minuman/<?= $s ?>" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Lihat<i class="fa fa-cart-plus"></i> <b id="total_qty" align="right"><?= $total_qty;?></b></a>
 <a href="<?php echo base_url('') ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
 </form>
 <br>
@@ -545,6 +545,18 @@ footer{
 
   }
 </script>
+<?php foreach ($item as $i ): ?>
+<script type="text/javascript">
+  let qty<?=$i->id?> = document.querySelector('#qty<?=$i->id?>');
+  if (localStorage.getItem('qtmn<?=$i->id?>')) {
+         qty<?=$i->id?>.value = localStorage.getItem('qtmn<?=$i->id?>');
+         }else{
+          qty<?=$i->id?>.value = 0;
+        }
+
+  
+</script>
+<?php endforeach ?>
 <?php //foreach ($item as $i ): ?>
 <script type="text/javascript">
 
@@ -613,6 +625,7 @@ footer{
     
     
 //   }
+
   function OrderQty(tipe,id) {
     var itemCode = $('#no' + id).val();
     var desc = $('#nama' + id).val();
@@ -624,8 +637,9 @@ footer{
       url: '<?= base_url().'ordermakanan/orderqty' ?>',
       dataType:'json',})
       .done(function (hasil){
+        localStorage.setItem('qtmn' + id,hasil.new_qty);
         if(hasil.status == true){
-          $('#qty' + id).val(hasil.new_qty);
+          $('#qty' + id).val(localStorage.getItem('qtmn'+ id));
           $('#pesan' + id).val(hasil.pesan);
           $('#cart_count').text(hasil.cart_count);
           $('#total_qty').text(hasil.total_qty);

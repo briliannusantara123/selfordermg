@@ -2,6 +2,7 @@
 	class Item_model extends CI_model {
 		public function getData($tipe,$sub_category)
 		{
+			$ic = $this->session->userdata('id');
 			// echo $tipe; echo $sub_category; exit();
 			if ($sub_category == "rekomendasi") {
 				$where = "chef_recommended = 1";
@@ -20,11 +21,14 @@
 	if($sub_category !=''){
 		$where .= " and LOWER(sub_category) = '".strtolower(urldecode($sub_category))."'";
 	}
-
+	// $this->db->where('c.id_customer',$ic);
+	$this->db->join('sh_cart c', 'i.no = c.item_code', 'left');
+	$this->db->select('i.description,i.image_path,i.id,i.harga_weekday,i.no,i.product_info,c.qty,c.id_customer');
 	$this->db->where($where);
+	$this->db->group_by("i.description");
 	$this->db->order_by('no asc');
 }
-	return $this->db->get('sh_m_item')->result();
+	return $this->db->get('sh_m_item i')->result();
 		}
 		public function get_holiday($tanggal='all')
 {
@@ -288,7 +292,7 @@ public function order_bill_line($cabang,$notrans)
 	$query = "select a.item_code,sum(a.qty) as qty, a.description, case when a.unit_price > 0 then a.unit_price else 'FREE' end as unit_price, case when (sum(a.qty*a.unit_price) - sum(a.qty*a.unit_price * (a.disc/100))) > 0 then (sum(a.qty*a.unit_price) - sum(a.qty*a.unit_price * (a.disc/100))) else 'FREE' end as sub_total 
 					  from sh_t_transaction_details a 
 					  inner join sh_t_transactions b on a.id_trans = b.id 
-					  inner join sh_m_customer c on c.id = b.id_customer where a.is_paid = 0 and a.is_cancel = 0 and b.cabang = ".$cabang." and b.id= ".$notrans." group by a.item_code,a.id_trans order by a.item_code asc";
+					  inner join sh_m_customer c on c.id = b.id_customer where a.is_paid = 0 and a.is_cancel = 0 and b.cabang = ".$cabang." and b.id= ".$notrans." group by a.item_code,a.id_trans order by a.id asc";
 	return $this->db->query($query)->result();
 }
 
@@ -336,6 +340,16 @@ public function order_bill_line($cabang,$notrans)
 		{
 			$this->db->where($where);
 			$this->db->update($table,$data);
-		}				
+		}
+		// public function get_qty()
+		// {
+		// 	$ic = $this->session->userdata('id');
+		// 	$this->db->select('*');
+	 //        $this->db->from('sh_cart');
+	 //        $this->db->where('id_customer',$ic);
+	              
+	 //        $query = $this->db->get()->row('qty');
+	 //        return $query;
+		// }				
 	}
  ?>
