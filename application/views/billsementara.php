@@ -4,29 +4,29 @@
               margin-bottom: 10px;
               padding-left: 40px;
               padding-right: 40px;
-              padding-top: 20px;
-              padding-bottom: 20px;
+              padding-top: 5px;
+              padding-bottom: 5px;
             }
             #btn_kiri_memanggil {
-              margin-bottom: 20px;
-              padding-left: 20px;
-              padding-right: 20px;
-              padding-top: 23px;
-              padding-bottom: 23px;
+              margin-bottom: 10px;
+              padding-left: 40px;
+              padding-right: 40px;
+              padding-top: 5px;
+              padding-bottom: 5px;
             }
             #btn_kanan_awal {
               margin-bottom: 20px;
-              padding-left: 20px;
-              padding-right: 20px;
-              padding-top: 23px;
-              padding-bottom: 23px;
+              padding-left: 40px;
+              padding-right: 40px;
+              padding-top: 5px;
+              padding-bottom: 5px;
             }
             #btn_kanan_bill {
               margin-bottom: 10px;
               padding-left: 48px;
               padding-right: 48px;
-              padding-top: 20px;
-              padding-bottom: 20px;
+              padding-top: 5px;
+              padding-bottom: 5px;
             }
   @media (min-width: 412px){
             #btn_kiri_order {
@@ -37,18 +37,18 @@
               padding-bottom: 20px;
             }
             #btn_kiri_memanggil {
-              margin-bottom: 20px;
-              padding-left: 20px;
-              padding-right: 20px;
-              padding-top: 23px;
-              padding-bottom: 23px;
+              margin-bottom: 10px;
+              padding-left: 40px;
+              padding-right: 40px;
+              padding-top: 30px;
+              padding-bottom: 30px;
             }
             #btn_kanan_awal {
               margin-bottom: 20px;
-              padding-left: 20px;
-              padding-right: 20px;
-              padding-top: 23px;
-              padding-bottom: 23px;
+              padding-left: 40px;
+              padding-right: 40px;
+              padding-top: 20px;
+              padding-bottom: 20px;
             }
             #btn_kanan_bill {
               margin-bottom: 10px;
@@ -62,29 +62,29 @@
         @media (min-width: 720px){
             #btn_kiri_order {
               margin-bottom: 10px;
-              padding-left: 38px;
-              padding-right: 38px;
+              padding-left: 40px;
+              padding-right: 40px;
               padding-top: 20px;
               padding-bottom: 20px;
             }
             #btn_kiri_memanggil {
-              margin-bottom: 20px;
-              padding-left: 20px;
-              padding-right: 20px;
-              padding-top: 23px;
-              padding-bottom: 23px;
+              margin-bottom: 10px;
+              padding-left: 52px;
+              padding-right: 52px;
+              padding-top: 20px;
+              padding-bottom: 20px;
             }
             #btn_kanan_awal {
               margin-bottom: 20px;
-              padding-left: 20px;
-              padding-right: 20px;
-              padding-top: 23px;
-              padding-bottom: 23px;
+              padding-left: 40px;
+              padding-right: 40px;
+              padding-top: 20px;
+              padding-bottom: 20px;
             }
             #btn_kanan_bill {
               margin-bottom: 10px;
-              padding-left: 55px;
-              padding-right: 55px;
+              padding-left: 48px;
+              padding-right: 48px;
               padding-top: 20px;
               padding-bottom: 20px;
             }
@@ -213,10 +213,10 @@
   <table class="table" style="border:2px solid #198754;">
   <thead style="background-color: #198754;color: white;">
     <tr>
-      <th scope="col">Menu Order</th>
+      <th scope="col">Order Menu</th>
       <th scope="col">Qty</th>
-      <th scope="col">Harga</th>
-      <th scope="col">Total Harga</th>
+      <th scope="col">Price</th>
+      <th scope="col">Total Price</th>
     </tr>
   </thead>
   <tbody>
@@ -224,8 +224,13 @@
     <tr>
       <th scope="row"><?= $i->description ?></th>
       <td><?= $i->qty ?></td>
-      <td>Rp <br> <?= number_format($i->unit_price) ?></td>
-      <td>Rp <br> <?= number_format($i->unit_price * $i->qty) ?></td>
+      <?php if ( $i->unit_price == 0): ?>
+          <td>Free</td>
+          <td>Free</td>
+      <?php else: ?>  
+        <td>Rp <br> <?= number_format($i->unit_price) ?></td>
+        <td>Rp <br> <?= number_format($i->unit_price * $i->qty) ?></td>
+      <?php endif ?>
     </tr>
     <?php endforeach ?>
   </tbody>
@@ -266,7 +271,7 @@
       <?php endif;?>
     </tr>
     <tr>
-      <th scope="row">Total Pembayaran</th>
+      <th scope="row">Total Payment</th>
       <td> </td>
       <td> </td>
       <?php if ($order_bill == NULL): ?>
@@ -284,13 +289,13 @@
 <div class="container text-center">
   <div class="row">
     <div class="col">
-      <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-success" id="btn_kiri_order">Tambah Order?</a>
-      <a href="<?php echo base_url() ?>Kasir_waitress/memanggil/<?= $nomeja ?>" class="btn btn-outline-success" id="btn_kiri_memanggil">Memanggil Waitress</a>
+      <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-success" id="btn_kiri_order">Add More Order</a>
+      <a href="<?php echo base_url() ?>Kasir_waitress/memanggil/<?= $nomeja ?>" class="btn btn-outline-success" id="btn_kiri_memanggil">Call Waitress</a>
     </div>
     
     <div class="col">
-    	<a href="<?php echo base_url() ?>Kasir_waitress/meminta/<?= $nomeja ?>" class="btn btn-outline-success" id="btn_kanan_bill">Meminta Bill</a>
-      <a href="<?= base_url() ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-success" id="btn_kanan_awal">Kembali ke Menu Awal</a>
+    	<!-- <a href="<?php echo base_url() ?>Kasir_waitress/meminta/<?= $nomeja ?>" class="btn btn-outline-success" id="btn_kanan_bill">Meminta Bill</a> -->
+      <a href="<?= base_url() ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-success" id="btn_kanan_awal" >Back to Main Page</a>
       
     </div>
   </div>

@@ -28,7 +28,7 @@ function __construct()
 	}
 	public function home($nomeja)
 	{
-		$this->session->set_flashdata('error','Terima Kasih Tapi Belum Ada Promo Saat Ini');
+		$this->session->set_flashdata('error','No Promo at the Moment');
 		redirect('selforder/home/'.$nomeja);
 	}
 	

@@ -10,6 +10,7 @@ class Ordermakanan extends CI_Controller {
             redirect('login/logout');
         }
 			$this->load->model('Item_model');
+			$this->load->helper('cookie');
 			$ic = $this->session->userdata('id');
 			$session = $this->db->order_by('id',"desc")->where('id_customer',$ic)
   			->limit(1)
@@ -50,10 +51,46 @@ class Ordermakanan extends CI_Controller {
 	}
 	public function menu($tipe,$sub_category)
 	{
+		$this->session->unset_userdata('notfound');
 		$id_customer = $this->session->userdata('id');
 		$nomeja = $this->session->userdata('nomeja');
 		$data['item'] = $this->Item_model->getData($tipe,$sub_category);
 		$data['sub'] = $this->Item_model->sub_category();
+		//$data['option'] = $this->Item_model->option();
+		$data['s'] = $sub_category;
+		$data['ic'] = $id_customer;
+		$data['key'] = '';
+		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
+		$data['nomeja'] = $this->session->userdata('nomeja');
+		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
+		if($cart_count > 0){
+			$cart = $this->Item_model->cart_count($id_customer,$nomeja)->row();//tambahan	
+			$cart_total = $cart->total_qty;
+		}else{
+			$cart_total = 0;
+		}
+		// $data['total_qty'] = $cart_total;
+		// $id_customer = $this->session->userdata('id');
+		// $q1 = "select * from sh_t_transactions where id_customer = '".$id_customer."' limit 1";
+		// 	$trans = $this->db->query($q1)->row();
+		// 	$notrans = $trans->id;
+		// $wh = "id_trans = '".$notrans."' and left(created_date,10) = left(sysdate(),10)";
+		// $co = $this->db
+  // 			->where($wh)
+  // 			->get('sh_t_transaction_details')
+  // 			->num_rows();
+  // 		$data['co'] = $co;
+			$this->load->view('ordermakanan',$data);
+		
+	}
+	public function menumakanan($tipe,$sub_category)
+	{
+		
+		$id_customer = $this->session->userdata('id');
+		$nomeja = $this->session->userdata('nomeja');
+		$data['item'] = $this->Item_model->getData($tipe,$sub_category);
+		$data['sub'] = $this->Item_model->sub_category();
+		//$data['option'] = $this->Item_model->option();
 		$data['s'] = $sub_category;
 		$data['ic'] = $id_customer;
 		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
@@ -66,12 +103,34 @@ class Ordermakanan extends CI_Controller {
 			$cart_total = 0;
 		}
 		$data['total_qty'] = $cart_total;
-			$this->load->view('ordermakanan',$data);
+
+			$this->load->view('menu/makanan',$data);
 		
 	}
+	public function option_list($item_code) {
+		
+	$option = $this->Item_model->option($item_code);
+	$html = "<select id='item_option' name='item_option'>";
+	$html .= "<option value=''>--Option--</option>";
+	foreach($option as $o){
+		$html .= "<option value='".$o->description."'>".$o->description."</option>";
+	}
+	$html .= "</select>";
+	return $html;
+}
 	public function subcreate($nomeja,$cek,$sub=NULL)
 	{
 		$uc = $this->session->userdata('username');
+		$id_customer = $this->session->userdata('id');
+		$cabang = $this->db->order_by('id',"desc")
+  			->limit(1)
+  			->get('sh_m_cabang')
+  			->row('id');
+  		$notrans = $this->db->order_by('id',"desc")->where('id_customer',$id_customer)
+  			->limit(1)
+  			->get('sh_t_transactions')
+  			->row('id');
+		$data['order_bill'] = $this->Item_model->order_bill_co($cabang,$notrans);
 		$data['total'] = $this->Item_model->totalSubOrder($uc);
 		$data['item'] = $this->Item_model->getDataSubOrder($uc);
 		$data['no_meja'] = $this->session->userdata('nomeja');
@@ -95,11 +154,17 @@ class Ordermakanan extends CI_Controller {
 		$nomeja = $this->session->userdata('nomeja');
 		$keyword = $this->input->post('keyword');
 		$data['s'] = 'Ayam';
+		$data['key'] = $keyword;
 		$data['item'] = $this->Item_model->get_keyword($keyword);
 		$data['sub'] = $this->Item_model->sub_category();
 		$data['nomeja'] = $this->session->userdata('nomeja');
 		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
 		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
+		$data_count = $this->Item_model->get_keyword($keyword);
+		if ($data_count == NULL) {
+			$this->session->set_flashdata('notfound','Not Found');
+		}
+		
 		if($cart_count > 0){
 			$cart = $this->Item_model->cart_count($id_customer,$nomeja)->row();//tambahan	
 			$cart_total = $cart->total_qty;
@@ -107,7 +172,7 @@ class Ordermakanan extends CI_Controller {
 			$cart_total = 0;
 		}
 		$data['total_qty'] = $cart_total;
-		$this->load->view('ordermakanan',$data);
+		$this->load->view('menu/makanan_search',$data);
 	}
 	public function create()
 	{
@@ -246,7 +311,46 @@ class Ordermakanan extends CI_Controller {
 			}
 		}
 	}
-
+	public function add_cart()
+	{
+		$id = $this->input->post('id');
+		$nama = $this->input->post('nama'.$id);
+		$harga = $this->input->post('harga'.$id);
+		$qty = $this->input->post('qty'.$id);
+		$pesan = $this->input->post('pesan'.$id);
+		$p = "3 PAHA";
+		$id_customer = $this->session->userdata('id');
+		$id_trans = $this->db->get_Where('sh_t_transactions', array('id_customer'=> $id_customer))->row();
+		// echo $nama;echo $harga;echo $qty;echo $pesan;exit();
+		$data = [
+				'item_code' => $this->input->post('no'.$id),
+				'id_trans' => $id_trans->id,
+				'id_customer' => $this->session->userdata('id'),
+				'qty' => $qty,
+				'cabang' => 8,
+				'unit_price' => $harga,
+				'description' => $nama,
+				'entry_by' => $this->session->userdata('username'),
+				'id_table' => $this->session->userdata('nomeja'),
+				'extra_notes' => $pesan,
+				'entry_date' => date('Y-m-d'),
+				
+			];
+			if ($qty == 0) {
+				$this->session->set_flashdata('error','Order Gagal! Tambahkan jumlah pesan!');
+				redirect($_SERVER['HTTP_REFERER']);
+			}else{
+				$result = $this->db->insert('sh_cart',$data);
+			}
+		if ($result) {
+				$this->session->set_flashdata('success','Menu Added to Cart');
+				redirect($_SERVER['HTTP_REFERER']);
+				// $where = array('qty' => 0);
+				// $this->Item_model->hapus_qty($where,'testing');
+			}else{
+				echo "gagal order";
+			}
+	}
 	public function addcart()
 	{
 		$table = $this->session->userdata('nomeja');
@@ -265,7 +369,7 @@ class Ordermakanan extends CI_Controller {
   			->limit(1)
   			->get('sh_m_cabang')
   			->row('id');
-	
+		echo $qty;
 		$nomer = 1;
 		for ($i = 0; $i < count($qty); $i++) {
 			
@@ -298,20 +402,20 @@ class Ordermakanan extends CI_Controller {
     
 	}
 
-	// if ($data == NULL) {
-	// 	$this->session->set_flashdata('error','Silahkan Pilih Makanan Yang Akan Di Pesan!');
-	// 			redirect($_SERVER['HTTP_REFERER']);
-	// }else{
-	// $result = $this->db->insert_batch('sh_cart',$data);
-	// 		if ($result) {
-	// 			$this->session->set_flashdata('success','Order Menu/Paket Berhasil Di Tambahkan Ke Dalam Cart');
-	// 			redirect($_SERVER['HTTP_REFERER']);
-	// 			// $where = array('qty' => 0);
-	// 			// $this->Item_model->hapus_qty($where,'testing');
-	// 		}else{
-	// 			echo "gagal order";
-	// 		}
-	// }
+	if ($data == NULL) {
+		$this->session->set_flashdata('error','Silahkan Pilih Makanan Yang Akan Di Pesan!');
+				redirect($_SERVER['HTTP_REFERER']);
+	}else{
+	$result = $this->db->insert_batch('sh_cart',$data);
+			if ($result) {
+				$this->session->set_flashdata('success','Order Menu/Paket Berhasil Di Tambahkan Ke Dalam Cart');
+				redirect($_SERVER['HTTP_REFERER']);
+				// $where = array('qty' => 0);
+				// $this->Item_model->hapus_qty($where,'testing');
+			}else{
+				echo "gagal order";
+			}
+	}
 	}
 	public function updatecart($id){
 		$table = $this->session->userdata('nomeja');
@@ -355,6 +459,20 @@ class Ordermakanan extends CI_Controller {
     		}
 	}
 	
+	}
+	public function jmlcart(){
+		$id_customer = $this->session->userdata('id');
+		$nomeja = $this->session->userdata('nomeja');
+		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
+		if($cart_count > 0){
+			$cart = $this->Item_model->cart_count($id_customer,$nomeja)->row();//tambahan	
+			$cart_total = $cart->total_qty;
+		}else{
+			$cart_total = 0;
+		}
+		$result['total'] = $cart_total;
+		$result['msg'] = "Berhasil di refresh secara Realtime";
+		echo json_encode($result);
 	}
 	public function order()
 	{

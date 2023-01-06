@@ -33,7 +33,8 @@
   background-position-y: 45%;
   background-position-x: 50%;
 }
-.active_cold{
+
+.active{
    background-color: #198754;
   color: white;
   
@@ -44,99 +45,14 @@
   display: inline-block;
   font-size: 12px;
   transition-duration: 0.4s;
-  background-image: url("<?= base_url() ?>/assets/icon/cold-drink.png");
-  background-repeat: no-repeat;
-  background-size: 50%;
-  background-position-y: 20%;
-  background-position-x: 50%;
-}
-.active_ice{
-   background-color: #198754;
-  color: white;
   
-  padding:16px 30px;
-  text-align: center;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  transition-duration: 0.4s;
-  background-image: url("<?= base_url() ?>/assets/icon/ice-cream-cup.png");
-  background-repeat: no-repeat;
-  background-size: 50%;
-  background-position-y: 20%;
-  background-position-x: 50%;
-}
-.active_soft{
-   background-color: #198754;
-  color: white;
-  
-  padding:16px 30px;
-  text-align: center;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  transition-duration: 0.4s;
-  background-image: url("<?= base_url() ?>/assets/icon/soft-drink.png");
-  background-repeat: no-repeat;
-  background-size: 50%;
-  background-position-y: 20%;
-  background-position-x: 50%;
-}
-.active_juice{
-   background-color: #198754;
-  color: white;
-  
-  padding:16px 30px;
-  text-align: center;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  transition-duration: 0.4s;
-  background-image: url("<?= base_url() ?>/assets/icon/orange-juice.png");
-  background-repeat: no-repeat;
-  background-size: 40%;
-  background-position-y: 20%;
-  background-position-x: 50%;
-}
-.active_frappe{
-   background-color: #198754;
-  color: white;
-  
-  padding:16px 30px;
-  text-align: center;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  transition-duration: 0.4s;
-  background-image: url("<?= base_url() ?>/assets/icon/frappe.png");
-  background-repeat: no-repeat;
-  background-size: 40%;
-  background-position-y: 20%;
-  background-position-x: 50%;
-}
-.active_arabica{
-   background-color: #198754;
-  color: white;
-  
-  padding:16px 30px;
-  text-align: center;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  transition-duration: 0.4s;
-  background-image: url("<?= base_url() ?>/assets/icon/coffee.png");
   background-repeat: no-repeat;
   background-size: 40%;
   background-position-y: 20%;
   background-position-x: 50%;
 }
 .button:hover {
-  background-color: #198754; /* Green */
+  /*background-color: #198754; *//* Green */
   border-radius: 10px;
   color: white;
 }
@@ -165,16 +81,133 @@
   background-color: #ddd;
   margin-right: 2px;
 }
-.modal {
-   margin-top: 220px;
-   top: 10px;
-   right: 100px;
-   bottom: 0;
-   left: 0;
-   z-index: 10040000;
-   overflow: auto;
-   overflow-y: auto;
-}
+ @media (max-width: 414px) {
+        .md {
+       margin-top: 35px;
+       top: 10px;
+       right: 100px;
+       width: 385px;
+       height:600px;
+       bottom: 0;
+       left: 0;
+       z-index: 10040000;
+       overflow: auto;
+       overflow-y: auto;
+    }
+        }
+          
+        /* Media Query for low resolution  Tablets, Ipads */
+        @media (min-width: 397px) {
+            .md {
+       margin-top: 30px;
+       top: 10px;
+       right: 100px;
+       width: 395px;
+       height:610px;
+       bottom: 0;
+       left: 0;
+       z-index: 10040000;
+       overflow: auto;
+       overflow-y: auto;
+    }
+        }
+      @media (min-height: 640px) {
+        .md {
+       margin-top: 50px;
+       top: 10px;
+       right: 0px;
+       width: 350px;
+       height:515px;
+       bottom: 0;
+       left: 5px;
+       z-index: 10040000;
+       overflow: auto;
+       overflow-y: auto;
+    }
+    .mdl {
+       margin-top: 205px;
+       top: 10px;
+       right: 0px;
+       width: 340px;
+       height:515px;
+       bottom: 0;
+       left: 10px;
+       z-index: 10040000;
+       overflow: auto;
+       overflow-y: auto;
+    }
+
+    #imgmodal{
+        width: 150px;height: 100px;border-radius: 20px; display: block;margin-left: auto;margin-right: auto;
+    }
+    #description{
+        color: #198754;float: left;font-size: 15px;
+    }
+    #product_info{
+        color: #198754;margin-top: 2px;float: left;font-size: 15px;
+    }
+    #harga{
+        color: #198754;margin-top: 2px;float: right;font-size: 15px;
+    }
+    #option{
+      float: left;color: #198754;font-size: 15px;
+    }
+    .modalbutton{
+      padding-left: 45px;padding-right: 45px;
+    }
+      }
+        @media (min-height: 720px) {
+            .md {
+       margin-top: 85px;
+       top: 10px;
+       right: 0px;
+       width: 350px;
+       height:540px;
+       bottom: 0;
+       left: 17px;
+       z-index: 10040000;
+       overflow: auto;
+       overflow-y: auto;
+    }
+    .mdl {
+       margin-top: 220px;
+       top: 10px;
+       right: 0px;
+       width: 350px;
+       height:515px;
+       bottom: 0;
+       left: 17px;
+       z-index: 10040000;
+       overflow: auto;
+       overflow-y: auto;
+    }
+    #imgmodal{
+        width: 170px;height: 150px;border-radius: 20px; display: block;margin-left: auto;margin-right: auto;
+    }
+    #description{
+        color: #198754;float: left;font-size: 15px;
+    }
+    #product_info{
+        color: #198754;margin-top: 2px;float: left;font-size: 15px;
+    }
+    #harga{
+        color: #198754;margin-top: 2px;float: right;font-size: 15px;
+    }
+    #option{
+      float: left;color: #198754;font-size: 15px;
+    }
+        }
+          
+        /* Media Query for Tablets Ipads portrait mode */
+        @media (min-width: 768px) and (max-width: 1024px){
+            
+
+        }
+          
+        /* Media Query for Laptops and Desktops */
+        @media (min-width: 1025px) and (max-width: 1280px){
+            
+        }
 .text_Ice_Strawberry_Milk{
   margin-bottom: 40px;
 }
@@ -250,27 +283,45 @@
   background-position-y: 20%;
   background-position-x: 50%;
 }
+.all{
+  background-image: url("<?= base_url() ?>/assets/icon/all.png");
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position-y: 45%;
+  background-position-x: 50%;
+}
 footer{
   text-align: center;
   background-color: white;
   margin-top: 10px;
-  border-radius: 10%;
+  border-top-right-radius: 10%;
+  border-top-left-radius: 10%;
   /*position: absolute;*/
   bottom: 0;
   width: 100%;
   position: fixed;
   z-index: 200000;
 }
+.load{
+    background: rgba(0,0,0,0.7);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 1000000;
+  }
     </style>
-
+<div id="loading"></div>
+<div id="load"></div>
+<div id="loadingkonek"></div>
     <nav class="bg-success" style="z-index: 10000;position: fixed;width: 100%;">
   <div class="container">
   <div class="row">
-    <div class="col-9"><p style="padding-top: 13px;color: white;">Menu Makanan</p></div>
+    <div class="col-9"><p style="padding-top: 13px;color: white;">Menu Minuman</p></div>
     <div class="col-1" style="z-index: 10040000;"><a style="text-align: center;margin-top: 6px;" href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>/Minuman/<?= $s ?>" class=""><svg xmlns="http://www.w3.org/2000/svg" width="25" height="23" color="white" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" style="margin-right: 10px;margin-top: 12px;margin-left: 10px;">
   <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
 </svg></a></div>
-<div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><b id="cart_count"><?= $cart_count ?></b></h3></strong></div>
+<!-- <div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><b id="cart_count"><?= $cart_count ?></b></h3></strong></div> -->
+<div class="col-1"><strong><h3 style="color: white;font-size: 10px;margin-top: 6px;background-color: red;border-radius: 40%;text-align: center;"><b id="total_qty_header"><?= $total_qty;?></b></h3></strong></div>
 
   </div>
 </div>
@@ -279,14 +330,19 @@ footer{
 </nav>
 <br>
 
-<header style="display: flex;width:100%; position: fixed;z-index: 100000;margin-top: 30px;background-color: white;">
+<header style="display: flex;width:100%; position: fixed;z-index: 100000;margin-top: 30px;background-color: white;border-bottom-right-radius: 5%;
+  border-bottom-left-radius: 5%;">
 
 <div class="wrapper" style="background-color: white;">
   <div class="item">
-      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/rekomendasi" class="button rekomendasi" style="text-decoration:none;padding: 10px 10px;padding-top: 18px;"><p style="margin-top: 60px;margin-bottom: 1px;">Rekomendasi</p></a></div>
+      <a href="#" id="rekomendasi" class="button rekomendasi testrekomendasi" style="text-decoration:none;padding: 10px 10px;padding-top: 29px;"><p style="margin-top: 60px;margin-bottom: 1px;">recommendation</p></a>
+  </div>
+  <!-- <div class="item">
+      <a href="#" id="all" class="button all testall" style="text-decoration:none;padding-top: 23px;"><p style="margin-top: 60px;margin-bottom: 1px;">   ALL   </p></a>
+  </div> -->
  <?php foreach($sub as $i){ ?>
     <div class="item">
-      <a href="<?= base_url() ?>orderminuman/menu/Minuman/<?= $i['description'] ?>" class="button <?= str_replace(" ","_", $i['description']) ?>" style="text-decoration:none"><p style="margin-top: 60px;margin-bottom: 1px;"><?= str_replace(" ","_", $i['description'])?></p></a></div>
+      <a href="#<?= str_replace(" ","_", $i['description']) ?>" id="<?= str_replace(" ","_", $i['description']) ?>" class="button <?= str_replace(" ","_", $i['description']) ?> test<?= str_replace(" ","_", $i['description']) ?>"  style="text-decoration:none;padding-top: 23px;"><p style="margin-top: 60px;margin-bottom: 1px;"><?= str_replace(" ","", $i['description'])?></p></a></div>
  <?php  }  ?>
 </div>
 
@@ -318,138 +374,25 @@ footer{
   </div> -->
 </div>
 </header>
-<form action="<?= base_url() ?>ordermakanan/search/<?= $nomeja ?>" method="post" >
+<form action="<?= base_url() ?>orderminuman/search/<?= $nomeja ?>" method="post" >
   <div class="container text-center" style="margin-top: 150px;display: flex;width:100%; position: fixed;z-index: 100000;">
   <div class="row">
-    <div class="col-10"><input type="text" name="keyword" class="form-control cari"  placeholder="Cari Menu Makanan..." style="border:1px solid #198754;"></div>
-    <div class="col-2"><button type="submit" class="btn btn-success">Cari</button></div>
+    <div class="col-10"><input type="text" name="keyword" class="form-control cari"  placeholder="Find Drinks..." style="border:1px solid #198754;"></div>
+    <div class="col-2"><button type="submit" class="btn btn-success">Find</button></div>
   </div>
 </div>
 </form>
 <!-- <?= base_url() ?>ordermakanan/addcart/<?= $nomeja ?> -->
-<form action="#" method="post"> 
-<div class="container text-center" style="margin-top: 185px;">
-  <div class="row row-cols-2">
-    <?php foreach($item as $i){ ?>
-
-<div class="container text-center" >
-  <div class="row">
-    <div class="col" style="margin-top:10px;">
-       <p class="text_<?= str_replace(" ","_", $i->description)?> text"><?= $i->description ?></p>
-      <?php if ( $i->image_path != "" ): ?>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $i->id ?>"><img src="<?= $i->image_path ?>" alt="Red dot" style="width: 120px;height: 120px;border-radius: 20px;" /></a>
-      <?php  else: ?>
-        <img src="<?= base_url();?>/assets/picture.png" alt="Red dot" style="width: 160px;height: 120px;border-radius: 20px;" />
-      <?php endif ?>
-      
-      <?php if ($i->harga_weekday == 0): ?>
-        <p>Free</p>
-      <?php else: ?>
-        <p class="text">Rp <?= number_format($i->harga_weekday) ?></p>
-      <?php endif ?>
-      
-    </div>
-    <div class="col">
-     <input type="text" name="pesan<?= $i->id ?>" id="pesan<?= $i->id ?>" class="form-control cari" placeholder="Masukan Pesan" style="border:1px solid #198754;">
-      <div class="container text-center">
-  <div class="row" style="margin-top: 5px;">
-    <div class="col" >
-      <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="minus<?= $i->id ?>" onclick="OrderQty('minus','<?= $i->id ?>');"> - </button>
-    </div>
-    <div class="col">
-
-      <input type="text" name="qty<?= $i->id ?>" id="qty<?= $i->id ?>" value="0"  class="form-control" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px; " readonly>
-    </div>
-    <div class="col">
-      <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;" id="plus<?= $i->id ?>" onclick="OrderQty('plus','<?= $i->id ?>');">+</button>
-    </div>
-  </div>
-</div>
-      <div class="container text-center">
-  <div class="row">
-    <div class="col">
-      
-      <input type="hidden" name="nama<?= $i->id ?>" id="nama<?= $i->id ?>" value="<?= $i->description ?>" class="form-control nama">
-      <input type="hidden" name="harga<?= $i->id ?>" id="harga<?= $i->id ?>" value="<?= $i->harga_weekday ?>" class="form-control harga">
-      <input type="hidden" name="no<?= $i->id ?>" id="no<?= $i->id ?>" value="<?= $i->no ?>" class="form-control harga">
-      
-    </div>
-  </div>
-</div>
-<div class="container text-center">
-  <!-- <div class="row">
-    <div class="col-7" style="color: #198754;">TakeAway?</div>
-    <div class="col-5"><input type="checkbox" value="Take Away" onclick="getClick<?= $i->id ?>()" class="ta<?= $i->id ?>"></div>
-  </div> -->
-</div>
-<div class="container text-center" id="tk<?= $i->id ?>" hidden >
-  <div class="row">
-    <div class="col" >
-      <input type="hidden" name="cek[]" class="cek<?= $i->id ?>" id="cek<?= $i->id ?>">
-      <button type="button" class="btn btn-success mi<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;"> - </button>
-    </div>
-    <div class="col">
-      <input type="text" name="qta[]" id="qta" value="0"  class="form-control nu<?= $i->id ?>" id="cek<?= $i->id ?>" style="border:1px solid #198754;margin-bottom: 5px;color: #198754; width:35px;" readonly disabled="disabled">
-    </div>
-    <div class="col">
-      <button type="button" class="btn btn-success pl<?= $i->id ?>" id="pls<?= $i->id ?>" style="padding-left: 10px;padding-right: 10px;">+</button>
-    </div>
-  </div>
-</div>
-      
-    </div>
-  </div>
+<div id="konten">
+  
 </div>
 
-<?php } ?>
-
-  </div>
-</div>   
-<br>
-<br>  
-<br>
-
-<footer>
-<div class="container text-center">
-<!-- <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
-  Order 
-</button> -->
-<a href="<?php echo base_url() ?>Cart/home/<?= $nomeja ?>/Minuman/<?= $s ?>" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Lihat<i class="fa fa-cart-plus"></i> <b id="total_qty" align="right"><?= $total_qty;?></b></a>
-<a href="<?php echo base_url('') ?>selforder/home/<?= $nomeja ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
-</form>
 <br>
 </div>
 </footer>
 <!-- Modal -->
-<?php foreach ($item as $i): ?>
-<div class="modal fade" id="exampleModal<?= $i->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header" style="background-color: #198754;color: white;">
-        <h5 class="modal-title" style="text-align: center;" id="exampleModalLabel">Menu Detail</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        
-      <h4 style="text-align: center;color: #198754;"><?= $i->description ?></h4>
-      <img src="<?= $i->image_path ?>" alt="Red dot" style="width: 180px;height: 180px;border-radius: 20px; display: block;margin-left: auto;margin-right: auto;" />
-      <h5 style="text-align: center;color: #198754;margin-top: 10px;"><?= $i->product_info ?></h5>
-      </div>
-      <div class="modal-footer">
-        
-      </div>
-    </div>
-  </div>
-</div>
-<?php endforeach ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="<?= base_url();?>/assets/bootstrap/js/jQuery3.5.1.min.js"></script>
   <?php //foreach ($item as $i ): ?>
 <!-- <script type="text/javascript">
   const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
@@ -505,7 +448,7 @@ footer{
 </script> -->
   
 <?php //endforeach ?>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   const currentLocation = location.href;
   const menuItem = document.querySelectorAll('a');
   
@@ -544,20 +487,122 @@ footer{
     }
 
   }
-</script>
-<?php foreach ($item as $i ): ?>
+</script> -->
+<?php foreach($sub as $i): ?>
 <script type="text/javascript">
-  let qty<?=$i->id?> = document.querySelector('#qty<?=$i->id?>');
-  if (localStorage.getItem('qtmn<?=$i->id?>')) {
-         qty<?=$i->id?>.value = localStorage.getItem('qtmn<?=$i->id?>');
-         }else{
-          qty<?=$i->id?>.value = 0;
-        }
+  var<?= str_replace(" ","_", $i['description']) ?>= document.getElementById('<?= str_replace(" ","_", $i['description']) ?>');
+  // var Ice_Creams = document.getElementById('Ice_Creams');
+  // var Soft_Drinks = document.getElementById('Soft_Drinks');
+  var Juice = document.getElementById('Juice_-_Fresh_Drinks');
+  // var FRAPPE_and_ICED = document.getElementById('FRAPPE_and_ICED');
+  // var ARABICA_COFFEE = document.getElementById('ARABICA_COFFEE');
+  var all = document.getElementById('all');
+  var rekomendasi = document.getElementById('rekomendasi');
+  var item<?= str_replace(" ","_", $i['description']) ?> = document.querySelector('.test<?= str_replace(" ","_", $i['description']) ?>');
+  var itemJuice = document.querySelector('.testJuice_-_Fresh_Drinks');
+  var itemall = document.querySelector('.testall');
+  var itemrekomendasi = document.querySelector('.testrekomendasi');
 
-  
+  if (window.location.toString() == "http://dev.3guru.com:5082/selforderMG/orderminuman/menu/Minuman/<?= str_replace(" ","%20", $i['description']) ?>#<?= str_replace(" ","_", $i['description']) ?>") {
+        $(document).ready(function() {
+        item<?= str_replace(" ","_", $i['description']) ?>.classList.add('active');
+    });
+    }else if (window.location.toString() == "http://dev.3guru.com:5082/selforderMG/orderminuman/menu/Minuman/rekomendasi#rekomendasi") {
+        $(document).ready(function() {
+        itemrekomendasi.classList.add('active');
+    });
+    }else if (window.location.toString() == "http://dev.3guru.com:5082/selforderMG/orderminuman/menu/Minuman/rekomendasi#Juice_-_Fresh_Drinks") {
+        $(document).ready(function() {
+        itemJuice.classList.add('active');
+    });
+    }
+
+  Cold_Drink.addEventListener("click", ()=>{
+    itemCold_Drink.classList.add('active');
+    // itemall.classList.remove('active');
+    itemrekomendasi.classList.remove('active');
+    itemIce_Creams.classList.remove('active');
+    itemJuice.classList.remove('active');
+    itemSoft_Drinks.classList.remove('active');
+    itemFRAPPE_and_ICED.classList.remove('active');
+    itemARABICA_COFFEE.classList.remove('active');
+    
+  });
+  Ice_Creams.addEventListener("click", ()=>{
+    itemIce_Creams.classList.add('active');
+    itemCold_Drink.classList.remove('active');
+    itemSoft_Drinks.classList.remove('active');
+    itemJuice.classList.remove('active');
+    itemFRAPPE_and_ICED.classList.remove('active');
+    itemARABICA_COFFEE.classList.remove('active');
+    // itemall.classList.remove('active');
+    itemrekomendasi.classList.remove('active');
+    
+  });
+  Soft_Drinks.addEventListener("click", ()=>{
+    itemSoft_Drinks.classList.add('active');
+    itemIce_Creams.classList.remove('active');
+    itemCold_Drink.classList.remove('active');
+    itemFRAPPE_and_ICED.classList.remove('active');
+    itemJuice.classList.remove('active');
+    itemARABICA_COFFEE.classList.remove('active');
+    // itemall.classList.remove('active');
+    itemrekomendasi.classList.remove('active');
+  });
+  Juice.addEventListener("click", ()=>{
+    itemJuice.classList.add('active');
+    itemCold_Drink.classList.remove('active');
+    itemIce_Creams.classList.remove('active');
+    itemSoft_Drinks.classList.remove('active');
+    itemFRAPPE_and_ICED.classList.remove('active');
+    itemARABICA_COFFEE.classList.remove('active');
+    // itemall.classList.remove('active');
+    itemrekomendasi.classList.remove('active');   
+  });
+  FRAPPE_and_ICED.addEventListener("click", ()=>{
+    itemFRAPPE_and_ICED.classList.add('active');
+    itemARABICA_COFFEE.classList.remove('active');
+    itemCold_Drink.classList.remove('active');
+    itemIce_Creams.classList.remove('active');
+    itemSoft_Drinks.classList.remove('active');
+    itemJuice.classList.remove('active');
+    // itemall.classList.remove('active');
+    itemrekomendasi.classList.remove('active');
+  });
+  ARABICA_COFFEE.addEventListener("click", ()=>{
+    itemARABICA_COFFEE.classList.add('active');
+    itemFRAPPE_and_ICED.classList.remove('active');
+    itemCold_Drink.classList.remove('active');
+    itemIce_Creams.classList.remove('active');
+    itemSoft_Drinks.classList.remove('active');
+    itemJuice.classList.remove('active');
+    // itemall.classList.remove('active');
+    itemrekomendasi.classList.remove('active');
+  });
+  // all.addEventListener("click", ()=>{
+  //   itemall.classList.add('active');
+  //   itemrekomendasi.classList.remove('active');
+  //   itemCold_Drink.classList.remove('active');
+  //   itemIce_Creams.classList.remove('active');
+  //   itemJuice.classList.remove('active');
+  //   itemSoft_Drinks.classList.remove('active');
+  //   itemFRAPPE_and_ICED.classList.remove('active');
+  //   itemARABICA_COFFEE.classList.remove('active');
+    
+  // });
+  rekomendasi.addEventListener("click", ()=>{
+    itemrekomendasi.classList.add('active');
+    // itemall.classList.remove('active');
+    itemIce_Creams.classList.remove('active');
+    itemJuice.classList.remove('active');
+    itemSoft_Drinks.classList.remove('active');
+    itemFRAPPE_and_ICED.classList.remove('active');
+    itemARABICA_COFFEE.classList.remove('active');
+    itemCold_Drink.classList.remove('active');
+  });
 </script>
-<?php endforeach ?>
-<?php //foreach ($item as $i ): ?>
+<?php endforeach; ?>
+<!-- <?php //foreach ($item as $i ): ?> -->
 <script type="text/javascript">
 
 // function getClick<?= $i->id ?>() {
@@ -626,43 +671,60 @@ footer{
     
 //   }
 
-  function OrderQty(tipe,id) {
-    var itemCode = $('#no' + id).val();
-    var desc = $('#nama' + id).val();
-    var price = $('#harga' + id).val();
-    var notes = $('#pesan' + id).val();
-    $.ajax({
-      type:'POST',
-      data: {tipe: tipe,id: id,item_code: itemCode,description: desc,unit_price: price,extra_notes: notes},
-      url: '<?= base_url().'ordermakanan/orderqty' ?>',
-      dataType:'json',})
-      .done(function (hasil){
-        localStorage.setItem('qtmn' + id,hasil.new_qty);
-        if(hasil.status == true){
-          $('#qty' + id).val(localStorage.getItem('qtmn'+ id));
-          $('#pesan' + id).val(hasil.pesan);
-          $('#cart_count').text(hasil.cart_count);
-          $('#total_qty').text(hasil.total_qty);
-        }
-      });
-  }
-</script>
-<?php //endforeach ?>
-<!-- <script type="text/javascript">
   
-  $(document).ready(function(){
-    setInterval(function(){
-      $.ajax({
-      type:'POST',
-      url: '<?= base_url().'ordermakanan/jmlcart' ?>',
-      dataType:'json',
-      success:function(data){
-          $("#target").html(data.total);
-          $("#cart").html(data.total);
-      }
-    });
-    },100);
-    
-  });
-</script> -->
+</script>
+
+<?php foreach ($sub as $i ): ?>
+<script type="text/javascript">
+      $(document).ready(function(){
+
+        var key = "<?= $key ?>";
+        if (key != '') {
+          $('#konten').load('http://dev.3guru.com:5082/selforderMG/orderminuman/search/1');
+        }
+         if (window.location.toString() == "http://dev.3guru.com:5082/selforderMG/orderminuman/menu/Minuman/<?= str_replace(" ","%20", $i['description']) ?>#<?= str_replace(" ","_", $i['description']) ?>") {
+          $('#konten').load('http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/<?= str_replace(" ","%20", $i['description']) ?>#<?= str_replace(" ","_", $i['description']) ?>');
+         }else if (window.location.toString() == "http://dev.3guru.com:5082/selforderMG/orderminuman/menu/Minuman/rekomendasi#rekomendasi") {
+          $('#konten').load('http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/rekomendasi#rekomendasi');
+         }else if (window.location.toString() == "http://dev.3guru.com:5082/selforderMG/orderminuman/menu/Minuman/rekomendasi#Juice_-_Fresh_Drinks") {
+          $('#konten').load('http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/rekomendasi#Juice_-_Fresh_Drinks');
+         }
+          
+        
+
+        $('#<?= str_replace(" ","_", $i['description']) ?>').click(function(){
+          // mengambil data dari href
+          var h = 'http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/<?= str_replace(" ","%20", $i['description']) ?>';
+          // alert(h);
+          // document.cookie = "menu=<?= str_replace(" ","_", $i['description']) ?>";
+          // <?php
+          //   $menu = get_cookie('menu');
+          //   $data = ['menu' => $menu];
+          //   $this->session->set_userdata($data);
+          // ?>
+          
+          
+          $('#konten').load(h);
+          // konten akan diisi oleh menu yang dipilih sesuai dengan isi dari href yang dipilih
+          
+        });
+        $('#rekomendasi').click(function(){
+          // mengambil data dari href
+          var h = 'http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/rekomendasi';
+          // alert(h);
+          $('#konten').load(h);
+          // konten akan diisi oleh menu yang dipilih sesuai dengan isi dari href yang dipilih
+          
+        });
+        $('#all').click(function(){
+          // mengambil data dari href
+          var h = 'http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/all';
+          // alert(h);
+          $('#konten').load(h);
+          // konten akan diisi oleh menu yang dipilih sesuai dengan isi dari href yang dipilih
+          
+        });
+      });
+    </script>
+<?php endforeach ?>
   <?php $this->load->view('template/footer') ?>

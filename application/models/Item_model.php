@@ -8,7 +8,17 @@
 				$where = "chef_recommended = 1";
 				$where .=" and is_active = 1 and is_sold_out = 0 and (monitor1 !=0 or monitor2 !=0 or monitor3 !=0 or monitor4 !=0 or monitor5 !=0 or monitor6 !=0 or monitor7 !=0 or monitor8 !=0 or monitor9 !=0 or monitor10 !=0 or monitor11 !=0 or monitor12 !=0 or monitor13 !=0 or monitor14 !=0 or monitor15 !=0 or monitor16 !=0 or monitor17 !=0 or monitor18 !=0 or monitor19 !=0 or monitor20 !=0 or monitor21 !=0 or monitor22 !=0 or monitor23 !=0 or monitor24 !=0 or monitor25 !=0 or monitor26 !=0) ";
 				$this->db->where($where);
-				$this->db->order_by('no asc');
+				$this->db->order_by('i.description asc');
+			}else if($sub_category == "all"){
+				$where ="is_active = 1 and is_sold_out = 0 and (monitor1 !=0 or monitor2 !=0 or monitor3 !=0 or monitor4 !=0 or monitor5 !=0 or monitor6 !=0 or monitor7 !=0 or monitor8 !=0 or monitor9 !=0 or monitor10 !=0 or monitor11 !=0 or monitor12 !=0 or monitor13 !=0 or monitor14 !=0 or monitor15 !=0 or monitor16 !=0 or monitor17 !=0 or monitor18 !=0 or monitor19 !=0 or monitor20 !=0 or monitor21 !=0 or monitor22 !=0 or monitor23 !=0 or monitor24 !=0 or monitor25 !=0 or monitor26 !=0) ";
+				$where .= "and group_item = 'Makanan'";
+				$this->db->where($where);
+				$this->db->order_by('i.description asc');
+			}else if($sub_category == "all_minuman"){
+				$where ="is_active = 1 and is_sold_out = 0 and (monitor1 !=0 or monitor2 !=0 or monitor3 !=0 or monitor4 !=0 or monitor5 !=0 or monitor6 !=0 or monitor7 !=0 or monitor8 !=0 or monitor9 !=0 or monitor10 !=0 or monitor11 !=0 or monitor12 !=0 or monitor13 !=0 or monitor14 !=0 or monitor15 !=0 or monitor16 !=0 or monitor17 !=0 or monitor18 !=0 or monitor19 !=0 or monitor20 !=0 or monitor21 !=0 or monitor22 !=0 or monitor23 !=0 or monitor24 !=0 or monitor25 !=0 or monitor26 !=0) ";
+				$where .= "and group_item = 'Minuman'";
+				$this->db->where($where);
+				$this->db->order_by('i.description asc');
 			}else{
 			if($tipe == 'Makanan'){
 		$where = " group_item = 'Makanan'";
@@ -19,14 +29,17 @@
 	$where .=" and is_active = 1 and is_sold_out = 0 and (monitor1 !=0 or monitor2 !=0 or monitor3 !=0 or monitor4 !=0 or monitor5 !=0 or monitor6 !=0 or monitor7 !=0 or monitor8 !=0 or monitor9 !=0 or monitor10 !=0 or monitor11 !=0 or monitor12 !=0 or monitor13 !=0 or monitor14 !=0 or monitor15 !=0 or monitor16 !=0 or monitor17 !=0 or monitor18 !=0 or monitor19 !=0 or monitor20 !=0 or monitor21 !=0 or monitor22 !=0 or monitor23 !=0 or monitor24 !=0 or monitor25 !=0 or monitor26 !=0) ";
 
 	if($sub_category !=''){
+		$ts = "FRAPPE%20and%20ICED";
 		$where .= " and LOWER(sub_category) = '".strtolower(urldecode($sub_category))."'";
 	}
 	// $this->db->where('c.id_customer',$ic);
+	
 	$this->db->join('sh_cart c', 'i.no = c.item_code', 'left');
-	$this->db->select('i.description,i.image_path,i.id,i.harga_weekday,i.no,i.product_info,c.qty,c.id_customer');
+	$this->db->join('sh_t_transaction_details d', 'i.no = d.item_code', 'left');
+	$this->db->select('i.description,i.image_path,i.id,i.harga_weekday,i.no,i.product_info,c.qty,c.id_customer,i.with_option,i.sub_category,d.qty');
 	$this->db->where($where);
 	$this->db->group_by("i.description");
-	$this->db->order_by('no asc');
+	$this->db->order_by('i.description asc');
 }
 	return $this->db->get('sh_m_item i')->result();
 		}
@@ -206,7 +219,7 @@ public function get_info_item($item_code, $data)
 			$header = $this->db->query($query)->row();
 
 			//bill line
-			$query1 = "select a.item_code,sum(a.qty) as qty, a.description, case when a.unit_price > 0 then a.unit_price else 'FREE' end as unit_price, case when sum(a.qty*a.unit_price) > 0 then sum(a.qty*a.unit_price) else 'FREE' end as sub_total 
+			$query1 = "select  a.description, case when a.unit_price > 0 then a.unit_price else 'FREE' end as unit_price, case when sum(a.qty*a.unit_price) > 0 then sum(a.qty*a.unit_price) else 'FREE' end as sub_total 
 								  from sh_t_transaction_details a 
 								  inner join sh_t_transactions b on a.id_trans = b.id 
 								  inner join sh_m_customer c on c.id = b.id_customer where a.is_paid = 0 and a.is_cancel = 0 and b.cabang = ".$cabang." and b.id= ".$notrans." group by a.item_code,a.id_trans order by a.item_code asc";
@@ -262,7 +275,7 @@ public function get_info_item($item_code, $data)
 			return $this->db->get()->row()->total;
    		}
    		public function totalSubOrder($uc){
-      		$this->db->select('SUM(harga * qty) as total');
+      		$this->db->select('SUM(unit_price * qty) as total');
 			$this->db->from('sh_t_sub_transactions');
 			$this->db->where('entry_by',$uc);
 			return $this->db->get()->row()->total;
@@ -283,6 +296,19 @@ public function get_info_item($item_code, $data)
 	//get setup
 	$query = "select c.customer_name, a.id_trans, c.total_pax as totalpax_reservasi, (select count(t.seat_id) as ttl from (select d.seat_id from sh_t_transaction_details d where d.id_trans = ".$notrans." group by d.selected_table_no,d.seat_id) as t) as totalpax_actual, (select (sum(d.unit_price * d.qty) - sum(d.unit_price * d.qty * (d.disc/100))) as total from sh_t_transaction_details d where d.is_paid = 0 and d.is_cancel = 0 and d.id_trans = ".$notrans." group by d.id_trans) as total, ((select (sum(d.unit_price * d.qty) - sum(d.unit_price * d.qty * (d.disc/100))) as total from sh_t_transaction_details d where d.is_paid = 0 and d.is_cancel = 0 and d.id_trans = ".$notrans." group by d.id_trans) * (".$scP."/100)) as sc, ((((select (sum(d.unit_price * d.qty) - sum(d.unit_price * d.qty * (d.disc/100))) as total from sh_t_transaction_details d where d.is_paid = 0 and d.is_cancel = 0 and d.id_trans = ".$notrans." group by d.id_trans) * (".$scP."/100)) * (".$taxP."/100)) + ((select (sum(d.unit_price * d.qty) - sum(d.unit_price * d.qty * (d.disc/100))) as total from sh_t_transaction_details d where d.is_paid = 0 and d.is_cancel = 0 and d.id_trans = ".$notrans." group by d.id_trans) * (".$taxP."/100))) as ppn, (select group_concat(xx.id_table) from sh_rel_table xx inner join sh_trans_reltable strx on strx.id_rel_table = xx.id inner join sh_t_transactions tx on tx.id = strx.id_trans where tx.id = ".$notrans.") as no_table, b.bill_printed_count as print_count 
 						  from sh_t_transaction_details a inner join sh_t_transactions b on a.id_trans = b.id 
+						  inner join sh_m_customer c on c.id = b.id_customer where a.is_paid = 0 and a.is_cancel = 0 and b.cabang = ".$cabang." and b.id= ".$notrans." and Left(b.create_date, 10) = Left(SYSDATE(), 10) limit 1";
+	return $this->db->query($query)->row();
+}
+public function order_bill_co($cabang,$notrans)
+{
+	//get setup
+	$q = "select * from sh_m_setup ";
+	$setup = $this->db->query($q)->row();
+	$scP = $setup->sc_percent;
+	$taxP = $setup->tax_percent;
+	//get setup
+	$query = "select c.customer_name, a.id_trans, c.total_pax as totalpax_reservasi, (select count(t.seat_id) as ttl from (select d.seat_id from sh_t_sub_transactions d where d.id_trans = ".$notrans." group by d.selected_table_no,d.seat_id) as t) as totalpax_actual, (select (sum(d.unit_price * d.qty) - sum(d.unit_price * d.qty * (d.disc/100))) as total from sh_t_sub_transactions d where d.is_paid = 0 and d.is_cancel = 0 and d.id_trans = ".$notrans." group by d.id_trans) as total, ((select (sum(d.unit_price * d.qty) - sum(d.unit_price * d.qty * (d.disc/100))) as total from sh_t_sub_transactions d where d.is_paid = 0 and d.is_cancel = 0 and d.id_trans = ".$notrans." group by d.id_trans) * (".$scP."/100)) as sc, ((((select (sum(d.unit_price * d.qty) - sum(d.unit_price * d.qty * (d.disc/100))) as total from sh_t_sub_transactions d where d.is_paid = 0 and d.is_cancel = 0 and d.id_trans = ".$notrans." group by d.id_trans) * (".$scP."/100)) * (".$taxP."/100)) + ((select (sum(d.unit_price * d.qty) - sum(d.unit_price * d.qty * (d.disc/100))) as total from sh_t_sub_transactions d where d.is_paid = 0 and d.is_cancel = 0 and d.id_trans = ".$notrans." group by d.id_trans) * (".$taxP."/100))) as ppn, (select group_concat(xx.id_table) from sh_rel_table xx inner join sh_trans_reltable strx on strx.id_rel_table = xx.id inner join sh_t_transactions tx on tx.id = strx.id_trans where tx.id = ".$notrans.") as no_table, b.bill_printed_count as print_count 
+						  from sh_t_sub_transactions a inner join sh_t_transactions b on a.id_trans = b.id 
 						  inner join sh_m_customer c on c.id = b.id_customer where a.is_paid = 0 and a.is_cancel = 0 and b.cabang = ".$cabang." and b.id= ".$notrans." and Left(b.create_date, 10) = Left(SYSDATE(), 10) limit 1";
 	return $this->db->query($query)->row();
 }
@@ -336,10 +362,74 @@ public function order_bill_line($cabang,$notrans)
 	        $query = $this->db->get();
 	        return $query;
 		}
+		public function count_cart_qty($ic,$nomeja)
+		{
+			$this->db->select('sum(d.qty) as total_qty_cart');
+	        $this->db->from('sh_cart d');
+	        $this->db->join('sh_m_item m', 'm.no = d.item_code', 'inner');
+	        $this->db->where(array('id_customer'=>$ic,'id_table'=>$nomeja));
+	        $this->db->group_by('d.id_trans,d.id_table');      
+	        $query = $this->db->get();
+	        return $query;
+		}
+
 		public function updatecart($where,$data,$table)
 		{
 			$this->db->where($where);
 			$this->db->update($table,$data);
+		}
+		public function option($item_code)
+		{
+				$this->db->select('o.*');
+				$this->db->from('sh_m_item_option o');
+				$this->db->join('sh_m_item m', 'm.no = o.item_code');
+				$this->db->where('o.item_code',$item_code);
+				return $this->db->get()->result();
+		}
+		public function cekpesan($item_code)
+		{
+		  $id_customer = $this->session->userdata('id');
+		  $q1 = "select * from sh_t_transactions where id_customer = '".$id_customer."' limit 1";
+			$trans = $this->db->query($q1)->row();
+			$notrans = $trans->id;
+			$cabang = $trans->cabang;
+		  // $wh = "item_code = '".$item_code."' and id_trans = '".$notrans."' and left(created_date,10) = left(sysdate(),10)";
+		  // $co = $this->db
+  		// 	->where($wh)
+  		// 	->get('sh_t_transaction_details')
+  		// 	->num_rows();
+				// $this->db->select('*');
+				// $this->db->from('sh_t_transaction_details');
+				// $this->db->where($wh);
+				// return $this->db->get()->result();
+
+				$query = "select a.item_code,sum(a.qty) as qty, a.description, case when a.unit_price > 0 then a.unit_price else 'FREE' end as unit_price, case when (sum(a.qty*a.unit_price) - sum(a.qty*a.unit_price * (a.disc/100))) > 0 then (sum(a.qty*a.unit_price) - sum(a.qty*a.unit_price * (a.disc/100))) else 'FREE' end as sub_total 
+					  from sh_t_transaction_details a 
+					  inner join sh_t_transactions b on a.id_trans = b.id 
+					  inner join sh_m_customer c on c.id = b.id_customer where a.is_paid = 0 and a.is_cancel = 0 and b.cabang = ".$cabang." and b.id= ".$notrans." and item_code = '".$item_code."' and id_trans = '".$notrans."' and left(created_date,10) = left(sysdate(),10) group by a.item_code,a.id_trans order by a.id asc";
+			return $this->db->query($query)->result();
+		}
+		public function cekcart($item_code)
+		{
+		  $id_customer = $this->session->userdata('id');
+		  $q1 = "select * from sh_cart where id_customer = '".$id_customer."' limit 1";
+			$trans = $this->db->query($q1)->row();
+			$notrans = $trans->id;
+			$cabang = $trans->cabang;
+		  // $wh = "item_code = '".$item_code."' and id_trans = '".$notrans."' and left(created_date,10) = left(sysdate(),10)";
+		  // $co = $this->db
+  		// 	->where($wh)
+  		// 	->get('sh_t_transaction_details')
+  		// 	->num_rows();
+				// $this->db->select('*');
+				// $this->db->from('sh_t_transaction_details');
+				// $this->db->where($wh);
+				// return $this->db->get()->result();
+
+				$query = "select a.item_code,sum(a.qty) as qty, a.description, case when a.unit_price > 0 then a.unit_price else 'FREE' end as unit_price, case when (sum(a.qty*a.unit_price) - sum(a.qty*a.unit_price * (a.disc/100))) > 0 then (sum(a.qty*a.unit_price) - sum(a.qty*a.unit_price * (a.disc/100))) else 'FREE' end as sub_total 
+					  from sh_cart a 
+					  where a.cabang = ".$cabang." and a.item_code = '".$item_code."' and a.id_trans = '".$notrans."' and left(created_date,10) = left(sysdate(),10) group by a.item_code,a.id_trans order by a.id asc";
+			return $this->db->query($query)->result();
 		}
 		// public function get_qty()
 		// {

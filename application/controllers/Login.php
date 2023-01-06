@@ -18,7 +18,7 @@ class Login extends CI_Controller
 		}
 		
 	}
-	public function log($nomeja)
+	public function log($nomeja=NULL)
 	{
 		$this->form_validation->set_rules('passcode','passcode','trim|required');
 		if ($nomeja != NULL) {

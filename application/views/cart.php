@@ -77,10 +77,10 @@ footer{
       <td><p>Rp <?= number_format($i->unit_price); ?></p></td>
       <td><p style="text-align: left;"><?= $i->qty ?></p></td>
       <td><p style="text-align: left;"><?= $i->extra_notes ?></p></td>
-      <td><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $i->id ?>" class="btn btn-success" style="padding:7px 7px; "><i class="fas fa-pen" style="color: white"></i></a><a href="<?= base_url() ?>cart/delete/<?= $i->id ?>/<?= $i->description ?>/<?= $nomeja ?>/<?= $cek ?>/<?= $sub ?>" class="btn btn-danger" style="padding:8px 8px;margin-bottom: 2px; "><i class="fas fa-trash"></i></a></td>
+      <td><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $i->id ?>" class="btn btn-success" style="padding:7px 7px; "><i class="fas fa-pen" style="color: white"></i></a><a href="<?= base_url() ?>cart/delete/<?= $i->id ?>/<?= $i->description ?>/<?= $nomeja ?>/<?= $cek ?>/<?= $sub ?>/<?= $i->item_code ?>" class="btn btn-danger" style="padding:8px 8px;margin-bottom: 2px; " onclick="hapus<?= $i->id?>('<?= $i->item_code?>')"><i class="fas fa-trash"></i></a></td>
     </tr>
     <input type="hidden" name="nama[]" value="<?= $i->description ?>">
-  <input type="hidden" name="qty[]" value="<?= $i->qty ?>">
+  <input type="hidden" name="qty[]" id="qty<?= $i->id?>" value="<?= $i->qty ?>">
   <input type="hidden" name="cek[]" value="<?= $i->as_take_away ?>">
   <input type="hidden" name="qta[]" value="<?= $i->qty_take_away ?>">
   <input type="hidden" name="harga[]" value="<?= $i->unit_price ?>">
@@ -99,14 +99,14 @@ footer{
 <footer>
 <?php if ($item == NULL): ?>
 <div class="container">
-<a href="<?= base_url() ?><?= $log ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;display: block;margin-left: auto;margin-right: auto;">Kembali</a>
+<a href="<?= base_url() ?><?= $log ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;display: block;margin-left: auto;margin-right: auto;">Back</a>
 </div>
 <?php else: ?>
 <div class="container text-center">
 <button type="submit" class="btn btn-outline-success" style="padding-top: 20px;padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">
   Order
 </button>
-<a href="<?= base_url() ?><?= $log ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Kembali</a>
+<a href="<?= base_url() ?><?= $log ?>" class="btn btn-outline-danger" style="padding-top: 20px;padding-bottom: 20px;padding-left: 40px;padding-right: 40px;">Back</a>
 </div>	
 <?php endif ?>
 <br>  
@@ -138,34 +138,42 @@ footer{
       <button type="button" class="btn btn-success minus<?= $i->id ?>" style="padding-left: 30px;padding-right: 30px;"> - </button>
     </div>
     <div class="col">
-      <input type="text" name="qty" class="form-control num<?= $i->id ?>" value="<?= $i->qty ?>" style="margin-bottom: 5px;text-align: center">
+      <input type="text" name="qty" class="form-control num<?= $i->id ?>" id="num<?= $i->id ?>" value="<?= $i->qty ?>" style="margin-bottom: 5px;text-align: center">
+      <input type="hidden" name=" " class="form-control flag<?= $i->id ?>" id="flag<?= $i->id ?>" value="0"  style="margin-bottom: 5px;text-align: center">
     </div>
     <div class="col">
       <button type="button" class="btn btn-success plus<?= $i->id ?>" style="padding-left: 30px;padding-right: 30px;">+</button>
     </div>
   </div>
 </div>
-      <input type="text" name="extra_notes" class="form-control" value="<?= $i->extra_notes ?>" placeholder="Masukan Pesan...">
+      <input type="hidden" name="extra_notes" class="form-control" value="<?= $i->extra_notes ?>" placeholder="Masukan Pesan...">
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-success" style="padding-left: 40px;padding-right: 40px;padding-top: 10px;padding-bottom: 10px;">Ubah</button>
+        <button type="submit" class="btn btn-success" style="padding-left: 40px;padding-right: 40px;padding-top: 10px;padding-bottom: 10px;" onclick="klikedit<?= $i->id?>('<?= $i->item_code?>')">Ubah</button>
       </div>
     </div>
     </form>
   </div>
 </div>
 <?php endforeach ?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
 <?php foreach ($item as $i ): ?>
 <script type="text/javascript">
 	const plus<?= $i->id ?> = document.querySelector(".plus<?= $i->id ?>"),
 	minus<?= $i->id ?> = document.querySelector(".minus<?= $i->id ?>"),
 	num<?= $i->id ?> = document.querySelector(".num<?= $i->id ?>");
+  flag<?= $i->id ?> = document.querySelector(".flag<?= $i->id ?>");
 
 	let a<?= $i->id ?> = <?= $i->qty ?>;
+  let b<?= $i->id ?> = 0; 
 
 	plus<?= $i->id ?>.addEventListener("click", ()=>{
 	 a<?= $i->id ?>++;
+   b<?= $i->id ?>++;
 	 num<?= $i->id ?>.value = a<?= $i->id ?>;
+   flag<?= $i->id ?>.value = b<?= $i->id ?>;
+   // localStorage.setItem('<?= $i->item_code ?>',a<?= $i->id ?>);
 	 console.log(a<?= $i->id ?>);	
 	});
 	minus<?= $i->id ?>.addEventListener("click", ()=>{
@@ -174,11 +182,50 @@ footer{
         // console.log(inputValue);
         if (inputValue >= 1) {
         	a<?= $i->id ?>--;
+          b<?= $i->id ?>--;
 	 num<?= $i->id ?>.value = a<?= $i->id ?>;
+   flag<?= $i->id ?>.value = b<?= $i->id ?>;
+   // localStorage.setItem('<?= $i->item_code ?>',a<?= $i->id ?>);
 	 console.log(a<?= $i->id ?>);
 	 }	
 	});
 </script>
 	
 <?php endforeach ?>
+<?php 
+  $nomeja = $this->session->userdata('nomeja');
+ ?>
+ <?php foreach ($item as $i ): ?>
+   <script type="text/javascript">
+   function hapus<?= $i->id?>(no){
+    
+    var qty<?= $i->id ?> = document.getElementById("qty<?= $i->id ?>");
+    var qa<?= $i->id ?> = parseInt(localStorage.getItem(no));
+    // console.log(qty<?= $i->id ?>.value);
+      localStorage.setItem(no,qa<?= $i->id ?>-qty<?= $i->id ?>.value);
+      localStorage.removeItem('qty'+no);
+      localStorage.removeItem('sim');
+      localStorage.removeItem('angka'+no);
+   }
+   function klikedit<?= $i->id?>(no){
+    
+    var flag<?= $i->id ?> = document.getElementById("flag<?= $i->id ?>");
+    var qa = parseInt(localStorage.getItem(no));
+    // console.log(flag<?= $i->id ?>.value);
+      localStorage.setItem(no,qa+parseInt(flag<?= $i->id ?>.value));
+      
+   }
+ </script>
+
+ <?php endforeach ?>
+   
+ 
+<!-- <script type="text/javascript">
+  const currentLocation = location.href;
+  if (currentLocation == "http://dev.3guru.com:5082/selforderMG/index.php/cart/home/<?= $nomeja ?>/Makanan/Chicken/<?= $no ?>/del") {
+    localStorage.removeItem('<?= $no ?>');
+  }else if(currentLocation == "http://dev.3guru.com:5082/selforderMG/index.php/cart/home/<?= $nomeja ?>/Minuman/Cold%20Drink/<?= $no ?>/del"){
+    localStorage.removeItem('<?= $no ?>');
+  }
+</script> -->
 <?php $this->load->view('template/footer') ?>

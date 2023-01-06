@@ -50,11 +50,13 @@ class Orderminuman extends CI_Controller {
 	}
 	public function menu($tipe,$sub_category)
 	{
+		$this->session->unset_userdata('notfoundminuman');
 		$id_customer = $this->session->userdata('id');
 		$nomeja = $this->session->userdata('nomeja');
 		$data['item'] = $this->Item_model->getData($tipe,$sub_category);
 		$data['sub'] = $this->Item_model->sub_category_minuman();
 		$data['s'] = $sub_category;
+		$data['key'] = '';
 		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
 		$data['nomeja'] = $this->session->userdata('nomeja');
 		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
@@ -68,16 +70,16 @@ class Orderminuman extends CI_Controller {
 			$this->load->view('orderminuman',$data);
 		
 	}
-	public function search()
+	public function menuminuman($tipe,$sub_category)
 	{
 		$id_customer = $this->session->userdata('id');
 		$nomeja = $this->session->userdata('nomeja');
-		$keyword = $this->input->post('keyword');
-		// var_dump($keyword);exit();
-		$data['item'] = $this->Item_model->get_keyword_minuman($keyword);
-		$data['sub'] = $this->Item_model->sub_category_minuman();
-		$data['nomeja'] = $this->session->userdata('nomeja');
+		$data['item'] = $this->Item_model->getData($tipe,$sub_category);
+		$data['sub'] = $this->Item_model->sub_category();
+		$data['s'] = $sub_category;
+		$data['ic'] = $id_customer;
 		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
+		$data['nomeja'] = $this->session->userdata('nomeja');
 		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
 		if($cart_count > 0){
 			$cart = $this->Item_model->cart_count($id_customer,$nomeja)->row();//tambahan	
@@ -86,7 +88,33 @@ class Orderminuman extends CI_Controller {
 			$cart_total = 0;
 		}
 		$data['total_qty'] = $cart_total;
-		$this->load->view('orderminuman',$data);
+			$this->load->view('menu/minuman',$data);
+		
+	}
+	public function search()
+	{
+		$id_customer = $this->session->userdata('id');
+		$nomeja = $this->session->userdata('nomeja');
+		$keyword = $this->input->post('keyword');
+		// var_dump($keyword);exit();
+		$data['item'] = $this->Item_model->get_keyword_minuman($keyword);
+		$data['s'] = 'Cold%20Drink';
+		$data['sub'] = $this->Item_model->sub_category_minuman();
+		$data['nomeja'] = $this->session->userdata('nomeja');
+		$data['cart_count'] = $this->Item_model->hitungcart($nomeja);
+		$cart_count = $this->Item_model->cart_count($id_customer,$nomeja)->num_rows();
+		$data_count = $this->Item_model->get_keyword_minuman($keyword);
+		if ($data_count == NULL) {
+			$this->session->set_flashdata('notfoundminuman','Not Found');
+		}
+		if($cart_count > 0){
+			$cart = $this->Item_model->cart_count($id_customer,$nomeja)->row();//tambahan	
+			$cart_total = $cart->total_qty;
+		}else{
+			$cart_total = 0;
+		}
+		$data['total_qty'] = $cart_total;
+		$this->load->view('menu/minuman_search',$data);
 	}
 	public function addcart()
 	{

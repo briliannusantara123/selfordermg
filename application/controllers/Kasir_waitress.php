@@ -43,15 +43,15 @@ class Kasir_waitress extends CI_Controller {
 			];
 			if ($panggil == NULL) {
 				$this->db->insert('sh_notification',$data);
-			$this->session->set_flashdata('success','Berhasil Memanggil Waitress,Harap Tunggu Sebentar.');
+			$this->session->set_flashdata('success','Please Wait a Moment,Waitress/Waiter Will Come to Serve You');
 			redirect($_SERVER['HTTP_REFERER']);
 			}elseif($panggil != NULL){
 				if ($panggil->is_accepted == 0) {
-				$this->session->set_flashdata('error','Panggilan Waitress sudah diterima, mohon ditunggu terima kasih.');
+				$this->session->set_flashdata('error','Please Wait a Moment,Waitress/Waiter is on the way');
 			redirect($_SERVER['HTTP_REFERER']);
 			}else{
 			$this->db->insert('sh_notification',$data);
-			$this->session->set_flashdata('success','Berhasil Memanggil Waitress,Harap Tunggu Sebentar.');
+			$this->session->set_flashdata('success','lease Wait a Moment,Waitress/Waiter Will Come to Serve You');
 			redirect($_SERVER['HTTP_REFERER']);
 			}
 			}
@@ -67,8 +67,10 @@ class Kasir_waitress extends CI_Controller {
 	  	->limit(1)
 	  	->get('sh_m_cabang')
 	  	->row('id');
+	  	$cekorder = $this->Item_model->billsementara($id_customer)->result();
 	  	$query = "select R.* from sh_notification R where R.id_table = '$nomeja' and left(R.created_date,10) = left(sysdate(),10) and R.customer_name = '$name' and R.tipe = 'Kasir' ORDER BY id DESC limit 1";
   	$panggil = $this->db->query($query)->row();
+  	
 		$data = [
 				'id_table' => $nomeja,
 				'customer_name' => $name,
@@ -76,19 +78,24 @@ class Kasir_waitress extends CI_Controller {
 				'cabang' => $cabang,
 				'created_date' => date('Y-m-d H:i:s')
 			];
-			if ($panggil == NULL) {
-				$this->db->insert('sh_notification',$data);
-			$this->session->set_flashdata('success','Berhasil Meminta Bill,Harap Tunggu Sebentar.');
-			redirect($_SERVER['HTTP_REFERER']);
-			}elseif($panggil != NULL){
-				if ($panggil->is_accepted == 0) {
-				$this->session->set_flashdata('error','Permintaan Bill sudah diterima, mohon ditunggu terima kasih');
-			redirect($_SERVER['HTTP_REFERER']);
+			if ($cekorder == NULL) {
+				$this->session->set_flashdata('error','Lakukan Order Terlebih Dahulu Sebelum Meminta Bill,Terima Kasih');
+				redirect($_SERVER['HTTP_REFERER']);
 			}else{
-			$this->db->insert('sh_notification',$data);
-			$this->session->set_flashdata('success','Berhasil Meminta Bill,Harap Tunggu Sebentar.');
-			redirect($_SERVER['HTTP_REFERER']);
-			}
+				if ($panggil == NULL) {
+					$this->db->insert('sh_notification',$data);
+					$this->session->set_flashdata('success','Berhasil Meminta Bill,Harap Tunggu Sebentar.');
+					redirect($_SERVER['HTTP_REFERER']);
+				}elseif($panggil != NULL){
+					if ($panggil->is_accepted == 0) {
+						$this->session->set_flashdata('error','Permintaan Bill sudah diterima, mohon ditunggu terima kasih');
+						redirect($_SERVER['HTTP_REFERER']);
+					}else{
+						$this->db->insert('sh_notification',$data);
+						$this->session->set_flashdata('success','Berhasil Meminta Bill,Harap Tunggu Sebentar.');
+						redirect($_SERVER['HTTP_REFERER']);
+					}
+				}
 			}
 	}
 	
