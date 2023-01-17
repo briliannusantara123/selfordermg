@@ -50,7 +50,7 @@
   </div>
   
 </div>
-<div class="container" style="margin-bottom: 20px;">
+<!-- <div class="container" style="margin-bottom: 20px;">
   <table class="table">
   <tbody>
     <tr>
@@ -95,10 +95,10 @@
     </tr>
   </tbody>
 </table>
-</div>
+</div> -->
 
 <footer>
-  <div class="text-center"><h5>Please Check Your Order,Order Has Been Submitted Cannot Be Cancelled</h5></div>
+  <div class="text-center"><h5>Please Check Your Order <br>Order Has Been Submitted <br> Cannot Be Cancelled</h5></div>
 <div class="container text-center">
   <div class="row">
     <div class="col">

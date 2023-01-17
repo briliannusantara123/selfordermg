@@ -688,6 +688,8 @@ footer{
           $('#konten').load('http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/rekomendasi#rekomendasi');
          }else if (window.location.toString() == "http://dev.3guru.com:5082/selforderMG/orderminuman/menu/Minuman/rekomendasi#Juice_-_Fresh_Drinks") {
           $('#konten').load('http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/rekomendasi#Juice_-_Fresh_Drinks');
+         }else{
+          // $('#konten').load('http://dev.3guru.com:5082/selforderMG/orderminuman/menuminuman/Minuman/Cold%20Drink#Cold_Drink');
          }
           
         

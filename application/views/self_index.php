@@ -174,7 +174,7 @@
 <div class="container " style="z-index: 10000;position: fixed;width: 100%;margin-top: 55px;">
   <div class="row">
     <div class="col bg-success" style="margin-left:30px;border-bottom-left-radius: 20px;padding-top: 10px; ">
-      <p style="color: white;"><?= date('d-m-y H:i:s'); ?></p>
+      <p style="color: white;">Date : <br><?= date('d-m-Y'); ?></p>
       <p style="color: white;">Table No : <?= $this->session->userdata('nomeja') ?></p>
     </div>
   

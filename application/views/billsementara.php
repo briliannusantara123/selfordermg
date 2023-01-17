@@ -306,19 +306,19 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" style="text-align: center;color: #198754;" id="exampleModalLabel">Tambah Order</h5>
+        <h5 class="modal-title" style="text-align: center;color: #198754;" id="exampleModalLabel">Add More Order</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container text-center">
   <div class="row">
     <div class="col">
-      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/<?= $sub_category ?>/<?= $nomeja ?>"  style="padding-right: 48px;padding-left: 48px;"class="btn btn-outline-success" id="btn_kiri_order">Tambah Order Makanan</a>
+      <a href="<?= base_url() ?>ordermakanan/menu/Makanan/Chicken#Chicken"  style="padding-right: 48px;padding-left: 48px;"class="btn btn-outline-success" id="btn_kiri_order">Order Food</a>
       
     </div>
     
     <div class="col">
-      <a href="<?= base_url() ?>orderminuman/menu/Minuman/<?= $sub_category_minuman ?>/<?= $nomeja ?>" class="btn btn-outline-success"  id="btn_kanan_bill">Tambah Order Minuman</a>
+      <a href="<?= base_url() ?>orderminuman/menu/Minuman/Cold%20Drink#Cold_Drink" class="btn btn-outline-success"  id="btn_kanan_bill">Order Drinks</a>
       
       
     </div>

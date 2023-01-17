@@ -471,14 +471,20 @@ if (localStorage.getItem('<?=$i->no?>')) {
     var desc = $('#nama' + id).val();
     var price = $('#harga' + id).val();
     var notes = $('#pesan' + id).val();
+    $('#kurang' + id).prop('disabled', true);
+    $('#tambah' + id).prop('disabled', true);
     $.ajax({
       type:'POST',
-      data: {tipe: tipe,id: id,item_code: itemCode,description: desc,unit_price: price,extra_notes: notes},
+      data: {tipe: tipe,id: id,item_code: itemCode,description: desc,unit_price: price,extra_notes: notes,no: no},
       url: '<?= base_url().'ordermakanan/orderqty' ?>',
       dataType:'json',})
       .done(function (hasil){
         localStorage.setItem(no,hasil.new_qty);
+        
         if(hasil.status == true){
+          $('#kurang' + id).prop('disabled', false);
+          $('#tambah' + id).prop('disabled', false);
+          
           $('#jumlah' + id).val(localStorage.getItem(no));
           $('#qtycart' + id).text("Cart Qty "+localStorage.getItem(no));
           $('#pesan' + id).val(hasil.pesan);
